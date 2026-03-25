@@ -549,7 +549,7 @@ tbody tr.selected { background: #fff3cd !important; }
   <div class="kpi-card">
     <div class="kpi-label">Net Capital Impact</div>
     <div class="kpi-value val-green">$96.3B</div>
-    <div class="kpi-sub">Fed. Reserve est. Cat I/II: &minus;4.8% CET1; Cat III/IV: &minus;3.0%; Smaller: &minus;7.8%</div>
+    <div class="kpi-sub">Fed estimate: Cat I/II: &minus;4.8% CET1; Cat III/IV: &minus;5.2% (all-in); Smaller: &minus;7.8%</div>
   </div>
   <div class="kpi-card">
     <div class="kpi-label">Lending Relief</div>
@@ -656,7 +656,7 @@ tbody tr.selected { background: #fff3cd !important; }
 
 <!-- FOOTER -->
 <div class="footer">
-  <div class="footer-brand">Amberoon Inc. Confidential | Big Tech for Small Banks</div>
+  <div class="footer-brand">&copy; 2026 Amberoon Inc.</div>
   <div>Source: Statum KPI data from Amberoon which is based on Q4 2025 Call Report data. Not investment, legal, or regulatory advice. &copy; 2026 Amberoon Inc.</div>
 </div>
 
@@ -1606,10 +1606,10 @@ function buildMethodology() {
     <div class="method-section">
       <h4>Risk Weight Assumptions</h4>
       <table class="method-table">
-        <tr><th>Asset Class</th><th>Current RW</th><th>Proposed RW</th><th>Source</th></tr>
+        <tr><th>Asset Class</th><th>Current RW</th><th>Statum KPI Estimate</th><th>Source</th></tr>
         <tr><td>Residential Mortgage (blended)</td><td>~65%</td><td>38%</td><td>LTV-based blended: ~38% blended under NPR</td></tr>
-        <tr><td>Commercial Real Estate (CRE)</td><td>100%</td><td>85%</td><td>Reduced from 100% (V10P calibration)</td></tr>
-        <tr><td>Multifamily</td><td>100%</td><td>70%</td><td>Separate treatment under V10P</td></tr>
+        <tr><td>Commercial Real Estate (CRE)</td><td>100%</td><td>85%</td><td>Reduced from 100% (Statum KPI calibration)</td></tr>
+        <tr><td>Multifamily</td><td>100%</td><td>70%</td><td>Separate treatment under Statum KPI</td></tr>
         <tr><td>Acquisition, Development &amp; Construction (ADC)</td><td>100%</td><td>130%</td><td>Higher risk weight for speculative construction</td></tr>
         <tr><td>Corporate / C&amp;I</td><td>100%</td><td>95% blended (IG: 65%)</td><td>Investment-grade tier at 65%; non-IG at full weight</td></tr>
         <tr><td>Consumer</td><td>87.5%</td><td>75%</td><td>Relief from blended current weight</td></tr>
@@ -1662,8 +1662,8 @@ function buildMethodology() {
     </div>
 
     <div class="method-section">
-      <h4>V10P Model Note</h4>
-      <p>This dashboard uses the <strong>V10P reconciled model</strong>, which merges the V9P foundation with V10 improvements. Key changes from prior versions: (1) CRE risk weight reduced from 95% to 85%; (2) Consumer risk weight reduced from ~90% to 75%; (3) C&amp;I investment-grade tier added at 65%; (4) Operational risk charge (BIC &times; 0.074) applies to GSIBs (Category I/II) only — Cat III/IV and smaller banks are exempt; (5) Morgan Stanley Bank, N.A. split into two GSIB entities (9 total GSIBs); (6) Total bank universe updated to 4,236 banks from Q4 2025 Call Reports.</p>
+      <h4>Statum KPI Model Note</h4>
+      <p>This dashboard uses the <strong>Statum KPI reconciled model</strong>, which merges the V9P foundation with V10 improvements. Key changes from prior versions: (1) CRE risk weight reduced from 95% to 85%; (2) Consumer risk weight reduced from ~90% to 75%; (3) C&amp;I investment-grade tier added at 65%; (4) Operational risk charge (BIC &times; 0.074) applies to GSIBs (Category I/II) only — Cat III/IV and smaller banks are exempt; (5) Morgan Stanley Bank, N.A. split into two GSIB entities (9 total GSIBs); (6) Total bank universe updated to 4,236 banks from Q4 2025 Call Reports.</p>
     </div>
 
     <div class="method-section">
@@ -1969,7 +1969,7 @@ function buildYourBank() {
         <label>Risk-Weighted Assets ($mm)</label><input type="number" id="yb-rwa" value="350" oninput="calcYourBank()"><span class="calc-note">From Call Report RC-R</span>
         <label>Category</label>
         <select id="yb-cat" onchange="calcYourBank()">
-          <option value="Community">Community (&lt;$20B)</option>
+          <option value="Community">Community (&lt;$20B) *</option>
           <option value="Regional">Regional ($20B-$100B)</option>
           <option value="Cat IV">Category IV ($100B-$250B)</option>
           <option value="Cat III">Category III ($250B+)</option>
