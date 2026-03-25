@@ -987,6 +987,22 @@ function buildSummary() {
     <div class="callout-body">The Federal Reserve estimates aggregate CET1 requirements decrease <strong>4.8%</strong> for Category I/II banks, <strong>3.0%</strong> for Category III/IV, and <strong>7.8%</strong> for smaller banks. Our bank-level analysis produces comparable results: <strong>4.5%</strong>, <strong>&minus;1.1%</strong> (net of AOCI), and <strong>7.7%</strong> respectively.</div>
   </div>`;
 
+  // Key Assumptions disclosure
+  h += '<details class="assumptions-bar">';
+  h += '<summary>Key Assumptions and Methodology (click to expand)</summary>';
+  h += '<div class="ab-content">';
+  h += '<p style="margin-bottom:10px;color:#555;line-height:1.5;">All figures on this dashboard are Statum KPI scenario estimates, not regulatory determinations. The model applies proposed risk weight changes from the March 19, 2026 NPR to actual Q4 2025 Call Report data. Key risk weight assumptions:</p>';
+  h += '<div class="ab-grid">';
+  h += '<div class="ab-header">Asset Class</div><div class="ab-header ab-val">Current</div><div class="ab-header ab-val">Our Est.</div><div class="ab-header">Basis</div>';
+  h += '<div>Residential Mortgage</div><div class="ab-val">~65%</div><div class="ab-val" style="color:var(--green);font-weight:600;">38%</div><div class="rw-note">LTV-based schedule from NPR. Blended across LTV bands.</div>';
+  h += '<div>CRE (Income-Producing)</div><div class="ab-val">100%</div><div class="ab-val" style="color:var(--green);font-weight:600;">85%</div><div class="rw-note">ERBA opt-in scenario. NPR Standardized Approach = 95%.</div>';
+  h += '<div>C&amp;I (Blended)</div><div class="ab-val">100%</div><div class="ab-val" style="color:var(--green);font-weight:600;">~89%</div><div class="rw-note">Assumes IG borrowers at 65% (ERBA). NPR SA = flat 95%.</div>';
+  h += '<div>Consumer</div><div class="ab-val">87.5%</div><div class="ab-val" style="color:var(--green);font-weight:600;">75%</div><div class="rw-note">ERBA qualifying retail. NPR Standardized Approach = 90%.</div>';
+  h += '<div>MSA</div><div class="ab-val">100%</div><div class="ab-val" style="color:var(--red);font-weight:600;">250%</div><div class="rw-note">Explicit in NPR. Material impact on servicer-heavy banks.</div>';
+  h += '</div>';
+  h += '<p class="disclaimer-note" style="margin-top:12px;">CRE and Consumer estimates reflect an ERBA opt-in scenario. Under the NPR Standardized Approach alone, CRE = 95% and Consumer = 90%, which would reduce aggregate lending relief. Use the "Your Bank" tab to input custom risk weight assumptions. 169 banks (4.0%) use peer-group average loan composition. "Regional" and "Community" are Statum KPI segmentation categories, not formal regulatory designations.</p>';
+  h += '</div></details>';
+
   // Insight cards
   h += `<div class="section-title">Key Insights</div>
   <div class="insight-grid">
@@ -1739,17 +1755,19 @@ function buildMethodology() {
 
     <div class="method-section">
       <h4>Risk Weight Assumptions</h4>
+      <p style="margin-bottom:10px;">All risk weights below are Statum KPI scenario estimates, not final regulatory requirements. The March 19, 2026 NPR proposes two frameworks: a Standardized Approach (all banks) and an Expanded Risk-Based Approach (ERBA, mandatory for Cat I/II, opt-in for others). Our estimates reflect an ERBA opt-in scenario for CRE and Consumer.</p>
       <table class="method-table">
-        <tr><th>Asset Class</th><th>Current RW</th><th>Statum KPI Estimate</th><th>Source</th></tr>
-        <tr><td>Residential Mortgage (blended)</td><td>~65%</td><td>38%</td><td>LTV-based blended: ~38% blended under NPR</td></tr>
-        <tr><td>Commercial Real Estate (CRE)</td><td>100%</td><td>85%</td><td>Reduced from 100% (Statum KPI calibration)</td></tr>
-        <tr><td>Multifamily</td><td>100%</td><td>70%</td><td>Separate treatment under Statum KPI</td></tr>
-        <tr><td>Acquisition, Development &amp; Construction (ADC)</td><td>100%</td><td>130%</td><td>Higher risk weight for speculative construction</td></tr>
-        <tr><td>Corporate / C&amp;I</td><td>100%</td><td>95% blended (IG: 65%)</td><td>Investment-grade tier at 65%; non-IG at full weight</td></tr>
-        <tr><td>Consumer</td><td>87.5%</td><td>75%</td><td>Relief from blended current weight</td></tr>
-        <tr><td>Other Assets</td><td>100%</td><td>90%</td><td>Blended reduction</td></tr>
-        <tr><td>Mortgage Servicing Assets (MSA)</td><td>—</td><td>250%</td><td>Punitive risk weight on servicing intangibles</td></tr>
+        <tr><th>Asset Class</th><th>Current</th><th>Our Est.</th><th>NPR SA</th><th>NPR ERBA</th><th>Confidence</th><th>Notes</th></tr>
+        <tr><td>Residential Mortgage</td><td>~65%</td><td style="font-weight:600;color:#16a34a;">38%</td><td>36&ndash;38%</td><td>20&ndash;70% (LTV)</td><td style="color:#16a34a;">High</td><td>LTV-based schedule in NPR. Blended across LTV bands.</td></tr>
+        <tr><td>CRE (Income-Producing)</td><td>100%</td><td style="font-weight:600;color:#16a34a;">85%</td><td>95%</td><td>70&ndash;110% (LTV)</td><td style="color:#f59e0b;">Moderate</td><td>ERBA blended estimate. Under SA alone, CRE = 95%.</td></tr>
+        <tr><td>Multifamily</td><td>100%</td><td style="font-weight:600;color:#16a34a;">70%</td><td>70%</td><td>70%</td><td style="color:#16a34a;">High</td><td>Explicitly stated in NPR. Same under both frameworks.</td></tr>
+        <tr><td>ADC (Construction)</td><td>100%</td><td style="font-weight:600;color:#dc2626;">130%</td><td>130%</td><td>130%</td><td style="color:#16a34a;">High</td><td>Explicitly stated in NPR.</td></tr>
+        <tr><td>C&amp;I (Blended)</td><td>100%</td><td style="font-weight:600;color:#16a34a;">~89%</td><td>95%</td><td>65% IG / 100%</td><td style="color:#f59e0b;">Moderate</td><td>Assumes ~30% IG at 65% (ERBA). SA = flat 95%.</td></tr>
+        <tr><td>Consumer</td><td>87.5%</td><td style="font-weight:600;color:#16a34a;">75%</td><td>90%</td><td>75% qualifying</td><td style="color:#f59e0b;">Moderate</td><td>ERBA qualifying retail. SA = 90% (an increase).</td></tr>
+        <tr><td>Other Assets</td><td>100%</td><td style="font-weight:600;color:#16a34a;">90%</td><td>Varies</td><td>Varies</td><td style="color:#9ca3af;">Low</td><td>Generic estimate.</td></tr>
+        <tr><td>MSA</td><td>100%</td><td style="font-weight:600;color:#dc2626;">250%</td><td>250%</td><td>250%</td><td style="color:#16a34a;">High</td><td>Explicitly stated in NPR.</td></tr>
       </table>
+      <p style="margin-top:12px;font-size:0.82rem;color:#555;">Under NPR Standardized Approach alone (without ERBA), aggregate lending relief would be ~$133B (vs $162B) and net capital impact ~$68B (vs $96B). Use the "Your Bank" tab to model custom assumptions.</p>
     </div>
 
     <div class="method-section">
@@ -1796,8 +1814,9 @@ function buildMethodology() {
     </div>
 
     <div class="method-section">
-      <h4>Statum KPI Model Note</h4>
-      <p>This dashboard uses the <strong>Statum KPI reconciled model</strong>, which merges the V9P foundation with V10 improvements. Key changes from prior versions: (1) CRE risk weight reduced from 95% to 85%; (2) Consumer risk weight reduced from ~90% to 75%; (3) C&amp;I investment-grade tier added at 65%; (4) Operational risk charge (BIC &times; 0.074) applies to GSIBs (Category I/II) only — Cat III/IV and smaller banks are exempt; (5) Morgan Stanley Bank, N.A. split into two GSIB entities (9 total GSIBs); (6) Total bank universe updated to 4,236 banks from Q4 2025 Call Reports.</p>
+      <h4>Important Disclosures</h4>
+      <p>All figures presented on this dashboard are Statum KPI scenario estimates based on our interpretation of the March 19, 2026 NPR applied to Q4 2025 FFIEC Call Report data. These are not regulatory determinations, legal advice, or investment recommendations.</p>
+      <p style="margin-top:8px;">This dashboard uses the <strong>Statum KPI model</strong>. Key changes from prior versions: (1) CRE risk weight reduced from 95% to 85%; (2) Consumer risk weight reduced from ~90% to 75%; (3) C&amp;I investment-grade tier added at 65%; (4) Operational risk charge (BIC &times; 0.074) applies to GSIBs (Category I/II) only — Cat III/IV and smaller banks are exempt; (5) Morgan Stanley Bank, N.A. split into two GSIB entities (9 total GSIBs); (6) Total bank universe updated to 4,236 banks from Q4 2025 Call Reports.</p>
     </div>
 
     <div class="method-section">
@@ -2135,6 +2154,39 @@ function buildYourBank() {
     </div>
 
     <div class="calc-section">
+      <h4>Risk Weight Assumptions</h4>
+      <p style="color:var(--muted);font-size:0.8rem;margin-bottom:12px;">These are the Statum KPI default estimates. Adjust to match your institution's expectations or to test alternative scenarios.</p>
+      <div class="rw-preset-btns">
+        <button class="rw-preset-btn active" onclick="setRWPreset('erba',this)">ERBA Opt-In (Default)</button>
+        <button class="rw-preset-btn" onclick="setRWPreset('sa',this)">NPR Standardized</button>
+        <button class="rw-preset-btn" onclick="setRWPreset('custom',this)">Custom</button>
+      </div>
+      <div class="rw-override-grid">
+        <div class="rw-hdr">Asset Class</div><div class="rw-hdr">Current %</div><div class="rw-hdr">Proposed %</div><div class="rw-hdr">Delta</div><div class="rw-hdr">Source</div>
+        <label>Residential Mortgage</label>
+        <input type="number" id="yb-rw-resi-old" value="65" step="1" min="0" max="200" oninput="calcYourBank()">
+        <input type="number" id="yb-rw-resi-new" value="38" step="1" min="0" max="200" oninput="calcYourBank()">
+        <div id="yb-rw-resi-delta" class="rw-note" style="text-align:center;font-weight:600;"></div>
+        <div class="rw-note">NPR LTV-based blend</div>
+        <label>Commercial Real Estate</label>
+        <input type="number" id="yb-rw-cre-old" value="100" step="1" min="0" max="200" oninput="calcYourBank()">
+        <input type="number" id="yb-rw-cre-new" value="85" step="1" min="0" max="200" oninput="calcYourBank()">
+        <div id="yb-rw-cre-delta" class="rw-note" style="text-align:center;font-weight:600;"></div>
+        <div class="rw-note">ERBA=85%, SA=95%</div>
+        <label>C&amp;I (Blended)</label>
+        <input type="number" id="yb-rw-ci-old" value="100" step="1" min="0" max="200" oninput="calcYourBank()">
+        <input type="number" id="yb-rw-ci-new" value="89" step="1" min="0" max="200" oninput="calcYourBank()">
+        <div id="yb-rw-ci-delta" class="rw-note" style="text-align:center;font-weight:600;"></div>
+        <div class="rw-note">ERBA IG=65%, SA=95%</div>
+        <label>Consumer</label>
+        <input type="number" id="yb-rw-con-old" value="87.5" step="0.5" min="0" max="200" oninput="calcYourBank()">
+        <input type="number" id="yb-rw-con-new" value="75" step="1" min="0" max="200" oninput="calcYourBank()">
+        <div id="yb-rw-con-delta" class="rw-note" style="text-align:center;font-weight:600;"></div>
+        <div class="rw-note">ERBA=75%, SA=90%</div>
+      </div>
+    </div>
+
+    <div class="calc-section">
       <h4>Results — Capital Impact</h4>
       <div class="calc-results">
         <div class="calc-result-card highlight" id="yb-r-net"><div class="label">Net Capital Impact</div><div class="value">—</div><div class="sub">All components combined</div></div>
@@ -2285,9 +2337,9 @@ function calcYourBank() {
 
 
 // ===== RISK WEIGHT PRESETS =====
-function setRWPreset(preset) {
+function setRWPreset(preset, btn) {
   document.querySelectorAll('.rw-preset-btn').forEach(b => b.classList.remove('active'));
-  event.target.classList.add('active');
+  if (btn) btn.classList.add('active');
   
   const presets = {
     erba: { resiOld: 65, resiNew: 38, creOld: 100, creNew: 85, ciOld: 100, ciNew: 89, conOld: 87.5, conNew: 75 },
