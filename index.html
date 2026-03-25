@@ -385,13 +385,99 @@ tbody tr.selected { background: #fff3cd !important; }
 .method-table th, .method-table td { padding: 10px 14px; border: 1px solid var(--border); text-align: left; }
 .method-table th { background: #f7f8fa; font-weight: 600; }
 
+/* ===== ASK STATUM ===== */
+.ask-statum {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  padding: 40px 28px;
+  margin-top: 0;
+}
+.ask-statum-inner { max-width: 900px; margin: 0 auto; }
+.ask-statum-header {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 20px;
+}
+.ask-statum-header h3 {
+  color: var(--amber); font-size: 1.4rem; font-weight: 700; margin: 0;
+}
+.ask-statum-header .ask-badge {
+  background: rgba(254,199,30,0.15); color: var(--amber); font-size: 0.65rem;
+  font-weight: 600; padding: 3px 8px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.5px;
+}
+.ask-statum-desc {
+  color: #94a3b8; font-size: 0.85rem; margin-bottom: 18px; line-height: 1.5;
+}
+.ask-mode-toggle {
+  display: flex; gap: 0; margin-bottom: 16px; border-radius: 6px; overflow: hidden; width: fit-content;
+}
+.ask-mode-btn {
+  padding: 7px 16px; font-size: 0.75rem; font-weight: 600; cursor: pointer;
+  border: 1px solid #334155; background: transparent; color: #94a3b8; transition: all 0.2s;
+}
+.ask-mode-btn.active { background: var(--amber); color: #0f172a; border-color: var(--amber); }
+.ask-mode-btn:first-child { border-radius: 6px 0 0 6px; }
+.ask-mode-btn:last-child { border-radius: 0 6px 6px 0; }
+.ask-input-row {
+  display: flex; gap: 10px; margin-bottom: 8px;
+}
+.ask-input-row input {
+  flex: 1; padding: 14px 18px; border: 1px solid #334155; border-radius: 8px;
+  background: #1e293b; color: #e2e8f0; font-size: 0.92rem;
+  outline: none; transition: border-color 0.2s;
+}
+.ask-input-row input:focus { border-color: var(--amber); box-shadow: 0 0 0 3px rgba(254,199,30,0.15); }
+.ask-input-row input::placeholder { color: #64748b; }
+.ask-input-row button {
+  padding: 14px 24px; background: var(--amber); color: #0f172a; border: none;
+  border-radius: 8px; font-weight: 700; font-size: 0.88rem; cursor: pointer;
+  transition: background 0.2s; white-space: nowrap;
+}
+.ask-input-row button:hover { background: var(--orange); color: #fff; }
+.ask-input-row button:disabled { background: #475569; color: #94a3b8; cursor: not-allowed; }
+.ask-samples {
+  display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px;
+}
+.ask-sample {
+  padding: 6px 12px; background: rgba(255,255,255,0.06); border: 1px solid #334155;
+  border-radius: 20px; color: #94a3b8; font-size: 0.75rem; cursor: pointer;
+  transition: all 0.2s;
+}
+.ask-sample:hover { background: rgba(254,199,30,0.1); border-color: var(--amber); color: var(--amber); }
+.ask-result {
+  background: rgba(255,255,255,0.04); border: 1px solid #334155; border-radius: 10px;
+  padding: 24px; min-height: 80px; display: none;
+}
+.ask-result.visible { display: block; animation: fadeUp 0.3s ease; }
+.ask-result-text { color: #e2e8f0; font-size: 0.88rem; line-height: 1.65; margin-bottom: 16px; }
+.ask-result-text strong { color: var(--amber); font-weight: 600; }
+.ask-result-table {
+  width: 100%; border-collapse: collapse; margin-bottom: 16px; font-size: 0.82rem;
+}
+.ask-result-table th {
+  background: rgba(254,199,30,0.12); color: var(--amber); text-align: left;
+  padding: 8px 12px; font-weight: 600; border-bottom: 1px solid #334155;
+}
+.ask-result-table td {
+  color: #cbd5e1; padding: 7px 12px; border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.ask-result-table tr:hover td { background: rgba(255,255,255,0.03); }
+.ask-chart-container { max-width: 700px; margin: 16px auto 0; }
+.ask-loading {
+  display: flex; align-items: center; gap: 10px; color: #94a3b8; font-size: 0.85rem;
+}
+.ask-loading .spinner {
+  width: 18px; height: 18px; border: 2px solid #334155;
+  border-top-color: var(--amber); border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.ask-error { color: #f87171; font-size: 0.85rem; margin-top: 8px; }
+
 /* ===== FOOTER ===== */
 .footer {
   background: #1a1a2e;
   color: rgba(255,255,255,0.65);
   padding: 20px 28px;
   font-size: 0.75rem;
-  margin-top: 40px;
+  margin-top: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -515,6 +601,43 @@ tbody tr.selected { background: #fff3cd !important; }
         <span style="color:var(--green);font-weight:600;">&#10003; Thank you! We'll be in touch shortly.</span>
       </div>
     </form>
+  </div>
+</div>
+
+<!-- ASK STATUM -->
+<div class="ask-statum" id="askStatumSection">
+  <div class="ask-statum-inner">
+    <div class="ask-statum-header">
+      <h3>Ask Statum</h3>
+      <span class="ask-badge">Beta</span>
+    </div>
+    <div class="ask-statum-desc">
+      Ask questions about capital impact data for 4,236 U.S. banks. Get answers with charts, tables, and analysis.
+    </div>
+    <div class="ask-mode-toggle">
+      <button class="ask-mode-btn active" onclick="setAskMode('local')" id="askModeLocal">Instant (Local Data)</button>
+      <button class="ask-mode-btn" onclick="setAskMode('llm')" id="askModeLLM">AI-Powered</button>
+    </div>
+    <div class="ask-input-row">
+      <input type="text" id="askInput" placeholder="e.g. Which Texas community banks benefit the most?" onkeydown="if(event.key==='Enter')runAskStatum()">
+      <button id="askBtn" onclick="runAskStatum()">Ask</button>
+    </div>
+    <div class="ask-samples">
+      <span class="ask-sample" onclick="askSample(this)">Top 10 banks by net benefit</span>
+      <span class="ask-sample" onclick="askSample(this)">Compare GSIBs vs community banks</span>
+      <span class="ask-sample" onclick="askSample(this)">Which states benefit most?</span>
+      <span class="ask-sample" onclick="askSample(this)">Banks in California over $1B assets</span>
+      <span class="ask-sample" onclick="askSample(this)">Average BPS impact by category</span>
+      <span class="ask-sample" onclick="askSample(this)">How does AOCI affect Category III banks?</span>
+    </div>
+    <div class="ask-result" id="askResult"></div>
+    <div id="askLLMConfig" style="display:none;margin-top:12px;">
+      <div style="display:flex;gap:8px;align-items:center;">
+        <input type="password" id="askAPIKey" placeholder="Enter OpenAI API key to enable AI mode" style="flex:1;padding:10px 14px;border:1px solid #334155;border-radius:6px;background:#1e293b;color:#e2e8f0;font-size:0.82rem;outline:none;">
+        <button onclick="saveAskKey()" style="padding:10px 18px;background:#334155;color:#94a3b8;border:none;border-radius:6px;font-size:0.8rem;font-weight:600;cursor:pointer;">Save Key</button>
+      </div>
+      <div style="color:#64748b;font-size:0.72rem;margin-top:6px;">Your key is stored locally in your browser only. Never sent to our servers.</div>
+    </div>
   </div>
 </div>
 
@@ -2026,6 +2149,453 @@ function buildGlossary() {
     </tbody>
     </table></div>
   `;
+}
+// ===== ASK STATUM ENGINE =====
+var askMode = 'local';
+var askChart = null;
+
+function setAskMode(mode) {
+  askMode = mode;
+  document.getElementById('askModeLocal').classList.toggle('active', mode === 'local');
+  document.getElementById('askModeLLM').classList.toggle('active', mode === 'llm');
+  document.getElementById('askLLMConfig').style.display = mode === 'llm' ? 'block' : 'none';
+  // Check if key already saved
+  if (mode === 'llm' && localStorage.getItem('askStatumKey')) {
+    document.getElementById('askAPIKey').value = '********';
+  }
+}
+
+function saveAskKey() {
+  var k = document.getElementById('askAPIKey').value.trim();
+  if (k && k !== '********') {
+    localStorage.setItem('askStatumKey', k);
+    document.getElementById('askAPIKey').value = '********';
+  }
+}
+
+function askSample(el) {
+  document.getElementById('askInput').value = el.textContent;
+  runAskStatum();
+}
+
+function runAskStatum() {
+  var q = document.getElementById('askInput').value.trim();
+  if (!q) return;
+  if (askMode === 'llm') {
+    runAskLLM(q);
+  } else {
+    runAskLocal(q);
+  }
+  trackEvent('ask_statum', askMode, q);
+}
+
+// ===== HELPER FUNCTIONS =====
+function fmt(v) {
+  if (Math.abs(v) >= 1e3) return '$' + (v/1e3).toFixed(1) + 'T';
+  if (Math.abs(v) >= 1) return '$' + v.toFixed(1) + 'B';
+  return '$' + (v * 1e3).toFixed(1) + 'M';
+}
+function fmtM(v) { return '$' + v.toFixed(1) + 'M'; }
+function fmtPct(v) { return (v * 100).toFixed(1) + '%'; }
+
+function showAskResult(html) {
+  var el = document.getElementById('askResult');
+  el.innerHTML = html;
+  el.classList.add('visible');
+}
+
+function showAskLoading() {
+  showAskResult('<div class="ask-loading"><div class="spinner"></div>Analyzing data...</div>');
+}
+
+function renderAskChart(type, labels, datasets, title) {
+  var container = document.getElementById('askChartBox');
+  if (!container) return;
+  var canvas = document.getElementById('askChartCanvas');
+  if (askChart) { askChart.destroy(); askChart = null; }
+  askChart = new Chart(canvas, {
+    type: type,
+    data: { labels: labels, datasets: datasets },
+    options: {
+      responsive: true,
+      plugins: {
+        title: { display: !!title, text: title || '', color: '#e2e8f0', font: { size: 13, weight: '600' } },
+        legend: { labels: { color: '#94a3b8', font: { size: 11 } } }
+      },
+      scales: type === 'pie' || type === 'doughnut' ? {} : {
+        x: { ticks: { color: '#94a3b8', font: { size: 10 } }, grid: { color: 'rgba(255,255,255,0.05)' } },
+        y: { ticks: { color: '#94a3b8', font: { size: 10 } }, grid: { color: 'rgba(255,255,255,0.05)' } }
+      }
+    }
+  });
+}
+
+function buildTable(headers, rows) {
+  var h = '<table class="ask-result-table"><thead><tr>';
+  headers.forEach(function(hd) { h += '<th>' + hd + '</th>'; });
+  h += '</tr></thead><tbody>';
+  rows.forEach(function(r) {
+    h += '<tr>';
+    r.forEach(function(c) { h += '<td>' + c + '</td>'; });
+    h += '</tr>';
+  });
+  h += '</tbody></table>';
+  return h;
+}
+
+function chartHTML() {
+  return '<div class="ask-chart-container" id="askChartBox"><canvas id="askChartCanvas" height="260"></canvas></div>';
+}
+
+// ===== US STATE NAME MAPPING =====
+var stateNames = {
+  'alabama':'Alabama','alaska':'Alaska','arizona':'Arizona','arkansas':'Arkansas','california':'California',
+  'colorado':'Colorado','connecticut':'Connecticut','delaware':'Delaware','florida':'Florida','georgia':'Georgia',
+  'hawaii':'Hawaii','idaho':'Idaho','illinois':'Illinois','indiana':'Indiana','iowa':'Iowa','kansas':'Kansas',
+  'kentucky':'Kentucky','louisiana':'Louisiana','maine':'Maine','maryland':'Maryland','massachusetts':'Massachusetts',
+  'michigan':'Michigan','minnesota':'Minnesota','mississippi':'Mississippi','missouri':'Missouri','montana':'Montana',
+  'nebraska':'Nebraska','nevada':'Nevada','new hampshire':'New Hampshire','new jersey':'New Jersey',
+  'new mexico':'New Mexico','new york':'New York','north carolina':'North Carolina','north dakota':'North Dakota',
+  'ohio':'Ohio','oklahoma':'Oklahoma','oregon':'Oregon','pennsylvania':'Pennsylvania','puerto rico':'Puerto Rico',
+  'rhode island':'Rhode Island','south carolina':'South Carolina','south dakota':'South Dakota','tennessee':'Tennessee',
+  'texas':'Texas','utah':'Utah','vermont':'Vermont','virginia':'Virginia','washington':'Washington',
+  'west virginia':'West Virginia','wisconsin':'Wisconsin','wyoming':'Wyoming','guam':'Guam',
+  'virgin islands':'Virgin Islands','district of columbia':'District Of Columbia'
+};
+
+// ===== LOCAL QUERY ENGINE =====
+function runAskLocal(q) {
+  showAskLoading();
+  setTimeout(function() { processLocalQuery(q); }, 150);
+}
+
+function processLocalQuery(q) {
+  var ql = q.toLowerCase();
+  var result = null;
+
+  // --- DETECT INTENT ---
+  var wantsState = null;
+  Object.keys(stateNames).forEach(function(sn) {
+    if (ql.indexOf(sn) !== -1) wantsState = stateNames[sn];
+  });
+
+  var wantsCat = null;
+  if (/\bgsib/.test(ql)) wantsCat = 'GSIB';
+  else if (/\bcat(egory)?\s*(iii|3)\b/.test(ql)) wantsCat = 'Cat III';
+  else if (/\bcat(egory)?\s*(iv|4)\b/.test(ql)) wantsCat = 'Cat IV';
+  else if (/\bregional/.test(ql)) wantsCat = 'Regional';
+  else if (/\bcommunity/.test(ql)) wantsCat = 'Community';
+
+  var wantsBank = null;
+  // Only search for bank names if no strong intent keywords detected
+  var hasIntent = /\btop\b|\bbottom\b|\bcompar|\bvs\b|\bstate|\baverage|\bbps\b|\baoci\b|\bop.*risk|\bwhich|\bhow\b|\bmost\b|\bbiggest\b|\bworst\b/.test(ql);
+  if (!hasIntent) {
+    BD.forEach(function(b) {
+      var bn = b.n.toLowerCase();
+      if (bn.length > 8 && ql.indexOf(bn) !== -1) wantsBank = b;
+    });
+  }
+
+  var wantsTop = ql.match(/top\s*(\d+)/i);
+  var topN = wantsTop ? parseInt(wantsTop[1]) : 10;
+  var wantsBottom = /\b(worst|bottom|least|lowest|losers?)\b/.test(ql);
+  var wantsCompare = /\bcompar|\bvs\b|\bversus\b/.test(ql);
+  var wantsAvg = /\b(average|avg|mean)\b/.test(ql);
+  var wantsBPS = /\bbps\b|\bbasis point/.test(ql);
+  var wantsAOCI = /\baoci\b/.test(ql);
+  var wantsOpRisk = /\bop(erational)?\s*risk\b/.test(ql);
+  var wantsMSA = /\bmsa\b|\bmortgage\s*servicing/.test(ql);
+  var wantsLend = /\blend(ing)?\s*(relief|benefit|impact)/.test(ql);
+  var wantsAssets = ql.match(/(over|above|more than|greater than|>)\s*\$?([\d.]+)\s*(b|billion|m|million|t|trillion)?/i);
+
+  // Filter base set
+  var filtered = BD.slice();
+  if (wantsState) filtered = filtered.filter(function(b) { return b.s === wantsState; });
+  if (wantsCat && !wantsCompare) filtered = filtered.filter(function(b) { return b.cat === wantsCat; });
+  if (wantsAssets) {
+    var thresh = parseFloat(wantsAssets[2]);
+    var unit = (wantsAssets[3] || 'b').toLowerCase();
+    if (unit === 'm' || unit === 'million') thresh = thresh; // already in $M
+    else if (unit === 'b' || unit === 'billion') thresh = thresh * 1000;
+    else if (unit === 't' || unit === 'trillion') thresh = thresh * 1000000;
+    else thresh = thresh * 1000; // default to billions
+    filtered = filtered.filter(function(b) { return b.a >= thresh; });
+  }
+
+  // --- SPECIFIC BANK LOOKUP ---
+  if (wantsBank) {
+    var b = wantsBank;
+    var text = '<div class="ask-result-text"><strong>' + b.n + '</strong> (' + b.s + ', ' + b.cat + ')</div>';
+    var rows = [
+      ['Total Assets', '$' + (b.a/1000).toFixed(1) + 'B'],
+      ['CET1 Capital', '$' + (b.cet1/1000).toFixed(1) + 'B'],
+      ['Risk-Weighted Assets', '$' + (b.rwa/1000).toFixed(1) + 'B'],
+      ['Net Capital Impact', fmtM(b.net)],
+      ['Lending Relief', fmtM(b.lend)],
+      ['AOCI Impact', b.aoci !== 0 ? fmtM(b.aoci) : 'N/A'],
+      ['OpRisk Impact', b.oprisk !== 0 ? fmtM(b.oprisk) : 'Exempt'],
+      ['MSA Impact', b.msa_imp !== 0 ? fmtM(b.msa_imp) : 'N/A'],
+      ['BPS Impact', b.bps + ' bps'],
+      ['Resi Mortgage %', fmtPct(b.rPct)],
+      ['CRE %', fmtPct(b.crePct)],
+      ['C&I %', fmtPct(b.ciPct)],
+      ['Consumer %', fmtPct(b.conPct)]
+    ];
+    text += buildTable(['Metric', 'Value'], rows);
+    text += chartHTML();
+    showAskResult(text);
+    renderAskChart('bar',
+      ['Lending', 'AOCI', 'OpRisk', 'MSA', 'Net'],
+      [{ label: b.n, data: [b.lend, b.aoci, b.oprisk, b.msa_imp, b.net],
+         backgroundColor: ['#34B4DB','#FF7238','#dc2626','#8b5cf6','#FEC71E'] }],
+      'Capital Impact Breakdown ($M)');
+    return;
+  }
+
+  // --- COMPARE CATEGORIES ---
+  if (wantsCompare || (ql.indexOf('by category') !== -1) || (ql.indexOf('by tier') !== -1)) {
+    var cats = ['GSIB','Cat III','Cat IV','Regional','Community'];
+    var catData = cats.map(function(c) {
+      var group = BD.filter(function(b) { return b.cat === c; });
+      var count = group.length;
+      var netSum = group.reduce(function(s,b){return s+b.net;},0);
+      var lendSum = group.reduce(function(s,b){return s+b.lend;},0);
+      var avgBps = count > 0 ? Math.round(group.reduce(function(s,b){return s+b.bps;},0)/count) : 0;
+      return { cat: c, count: count, net: netSum, lend: lendSum, avgBps: avgBps };
+    });
+    var text = '<div class="ask-result-text">Capital impact comparison across all regulatory categories:</div>';
+    text += buildTable(['Category','Banks','Net Impact','Lending Relief','Avg BPS'],
+      catData.map(function(d) { return [d.cat, d.count.toLocaleString(), fmtM(d.net), fmtM(d.lend), d.avgBps + ' bps']; }));
+    text += chartHTML();
+    showAskResult(text);
+    renderAskChart('bar', cats,
+      [
+        { label: 'Net Impact ($M)', data: catData.map(function(d){return d.net;}), backgroundColor: '#FEC71E' },
+        { label: 'Lending Relief ($M)', data: catData.map(function(d){return d.lend;}), backgroundColor: '#34B4DB' }
+      ], 'Category Comparison');
+    return;
+  }
+
+  // --- STATE ANALYSIS ---
+  if (wantsState || /\bstate/.test(ql) || /which\s+state/.test(ql)) {
+    if (!wantsState) {
+      // Aggregate by state
+      var stateMap = {};
+      BD.forEach(function(b) {
+        if (!stateMap[b.s]) stateMap[b.s] = { net: 0, count: 0, lend: 0 };
+        stateMap[b.s].net += b.net;
+        stateMap[b.s].count++;
+        stateMap[b.s].lend += b.lend;
+      });
+      var stateArr = Object.keys(stateMap).map(function(s) {
+        return { state: s, net: stateMap[s].net, count: stateMap[s].count, lend: stateMap[s].lend };
+      });
+      stateArr.sort(function(a,b) { return b.net - a.net; });
+      var top = stateArr.slice(0, topN);
+      var text = '<div class="ask-result-text">Top ' + topN + ' states by net capital impact:</div>';
+      text += buildTable(['State','Banks','Net Impact','Lending Relief'],
+        top.map(function(d) { return [d.state, d.count, fmtM(d.net), fmtM(d.lend)]; }));
+      text += chartHTML();
+      showAskResult(text);
+      renderAskChart('bar', top.map(function(d){return d.state;}),
+        [{ label: 'Net Impact ($M)', data: top.map(function(d){return d.net;}), backgroundColor: '#FEC71E' }],
+        'Top States by Net Capital Impact');
+      return;
+    } else {
+      // Show banks in specific state
+      filtered.sort(function(a,b) { return b.net - a.net; });
+      var top = filtered.slice(0, topN);
+      var text = '<div class="ask-result-text">Found <strong>' + filtered.length + '</strong> banks in <strong>' + wantsState + '</strong>. ';
+      text += 'Total net impact: <strong>' + fmtM(filtered.reduce(function(s,b){return s+b.net;},0)) + '</strong>. Showing top ' + Math.min(topN, filtered.length) + ':</div>';
+      text += buildTable(['Bank','Category','Assets','Net Impact','BPS'],
+        top.map(function(b) { return [b.n, b.cat, '$'+(b.a/1000).toFixed(1)+'B', fmtM(b.net), b.bps+' bps']; }));
+      text += chartHTML();
+      showAskResult(text);
+      renderAskChart('bar', top.map(function(b){return b.n.substring(0,20);}),
+        [{ label: 'Net Impact ($M)', data: top.map(function(b){return b.net;}), backgroundColor: '#FEC71E' }],
+        wantsState + ' Banks by Net Capital Impact');
+      return;
+    }
+  }
+
+  // --- AOCI ANALYSIS ---
+  if (wantsAOCI) {
+    var aociBanks = BD.filter(function(b) { return b.aoci !== 0; });
+    aociBanks.sort(function(a,b) { return a.aoci - b.aoci; }); // most negative first
+    var top = aociBanks.slice(0, topN);
+    var totalAOCI = aociBanks.reduce(function(s,b){return s+b.aoci;},0);
+    var text = '<div class="ask-result-text">AOCI filter removal affects <strong>' + aociBanks.length + '</strong> banks (Category III/IV). ';
+    text += 'Total AOCI impact: <strong>' + fmtM(totalAOCI) + '</strong>.</div>';
+    text += buildTable(['Bank','Category','AOCI Impact','Net Impact'],
+      top.map(function(b) { return [b.n, b.cat, fmtM(b.aoci), fmtM(b.net)]; }));
+    text += chartHTML();
+    showAskResult(text);
+    renderAskChart('bar', top.map(function(b){return b.n.substring(0,18);}),
+      [
+        { label: 'AOCI Impact ($M)', data: top.map(function(b){return b.aoci;}), backgroundColor: '#FF7238' },
+        { label: 'Net Impact ($M)', data: top.map(function(b){return b.net;}), backgroundColor: '#FEC71E' }
+      ], 'AOCI Impact on Category III/IV Banks');
+    return;
+  }
+
+  // --- BPS ANALYSIS ---
+  if (wantsBPS || wantsAvg) {
+    var cats = ['GSIB','Cat III','Cat IV','Regional','Community'];
+    var catBPS = cats.map(function(c) {
+      var group = BD.filter(function(b) { return b.cat === c; });
+      var avg = group.length > 0 ? Math.round(group.reduce(function(s,b){return s+b.bps;},0)/group.length) : 0;
+      var maxB = group.reduce(function(m,b){return b.bps>m.bps?b:m;}, group[0] || {bps:0});
+      var minB = group.reduce(function(m,b){return b.bps<m.bps?b:m;}, group[0] || {bps:999});
+      return { cat: c, avg: avg, max: maxB, min: minB, count: group.length };
+    });
+    var text = '<div class="ask-result-text">Average basis point (BPS) impact by regulatory category:</div>';
+    text += buildTable(['Category','Banks','Avg BPS','Best Bank','Best BPS','Lowest Bank','Lowest BPS'],
+      catBPS.map(function(d) {
+        return [d.cat, d.count, d.avg + ' bps',
+          d.max.n || 'N/A', (d.max.bps || 0) + ' bps',
+          d.min.n || 'N/A', (d.min.bps || 0) + ' bps'];
+      }));
+    text += chartHTML();
+    showAskResult(text);
+    renderAskChart('bar', cats,
+      [{ label: 'Avg BPS', data: catBPS.map(function(d){return d.avg;}), backgroundColor: ['#34B4DB','#FF7238','#FEC71E','#16a34a','#8b5cf6'] }],
+      'Average BPS Impact by Category');
+    return;
+  }
+
+  // --- TOP/BOTTOM N ---
+  if (wantsTop || wantsBottom || /\btop\b|\bbiggest\b|\blargest\b|\bmost\b|\bhighest\b/.test(ql)) {
+    var sortField = 'net';
+    if (wantsLend || /\blend/.test(ql)) sortField = 'lend';
+    if (wantsBPS || /\bbps/.test(ql)) sortField = 'bps';
+    if (/\basset/.test(ql)) sortField = 'a';
+    filtered.sort(function(a,b) { return wantsBottom ? a[sortField] - b[sortField] : b[sortField] - a[sortField]; });
+    var top = filtered.slice(0, topN);
+    var label = wantsBottom ? 'Bottom' : 'Top';
+    var fieldLabel = sortField === 'net' ? 'Net Impact' : sortField === 'lend' ? 'Lending Relief' : sortField === 'bps' ? 'BPS' : 'Assets';
+    var text = '<div class="ask-result-text">' + label + ' ' + topN + ' banks by ' + fieldLabel;
+    if (wantsState) text += ' in ' + wantsState;
+    if (wantsCat) text += ' (' + wantsCat + ')';
+    text += ':</div>';
+    text += buildTable(['Bank','State','Category','Assets','Net Impact','BPS'],
+      top.map(function(b) { return [b.n, b.s, b.cat, '$'+(b.a/1000).toFixed(1)+'B', fmtM(b.net), b.bps+' bps']; }));
+    text += chartHTML();
+    showAskResult(text);
+    renderAskChart('bar', top.map(function(b){return b.n.substring(0,18);}),
+      [{ label: fieldLabel + (sortField==='bps'?' (bps)':' ($M)'), data: top.map(function(b){return b[sortField];}),
+         backgroundColor: '#FEC71E' }],
+      label + ' ' + topN + ' Banks by ' + fieldLabel);
+    return;
+  }
+
+  // --- FALLBACK: fuzzy bank name search ---
+  var queryWords = ql.split(/\s+/).filter(function(w) { return w.length > 3 && ['bank','the','what','which','how','does','many','most','with','from','that','this','are','for','and','but','not'].indexOf(w) === -1; });
+  var matches = BD.filter(function(b) {
+    var bn = b.n.toLowerCase();
+    return queryWords.some(function(w) { return bn.indexOf(w) !== -1; });
+  });
+  if (matches.length > 0 && matches.length <= 20) {
+    matches.sort(function(a,b){return b.net-a.net;});
+    var text = '<div class="ask-result-text">Found <strong>' + matches.length + '</strong> matching banks:</div>';
+    text += buildTable(['Bank','State','Category','Assets','Net Impact','BPS'],
+      matches.map(function(b) { return [b.n, b.s, b.cat, '$'+(b.a/1000).toFixed(1)+'B', fmtM(b.net), b.bps+' bps']; }));
+    showAskResult(text);
+    return;
+  }
+
+  // --- GENERIC SUMMARY ---
+  var totalNet = BD.reduce(function(s,b){return s+b.net;},0);
+  var totalLend = BD.reduce(function(s,b){return s+b.lend;},0);
+  var benefiting = BD.filter(function(b){return b.net > 0;}).length;
+  var text = '<div class="ask-result-text">I analyzed the data but couldn\'t match a specific query pattern. Here\'s a summary of the full dataset:</div>';
+  text += '<div class="ask-result-text">';
+  text += 'Total banks: <strong>' + BD.length.toLocaleString() + '</strong><br>';
+  text += 'Net capital impact: <strong>' + fmtM(totalNet) + '</strong><br>';
+  text += 'Lending relief: <strong>' + fmtM(totalLend) + '</strong><br>';
+  text += 'Banks benefiting: <strong>' + benefiting.toLocaleString() + '</strong> (' + (100*benefiting/BD.length).toFixed(1) + '%)<br>';
+  text += '</div>';
+  text += '<div class="ask-result-text" style="color:#94a3b8;font-size:0.8rem;">Try asking about a specific state, bank, category, or use phrases like "top 10", "compare", or "average BPS".</div>';
+  showAskResult(text);
+}
+
+// ===== LLM MODE =====
+function runAskLLM(q) {
+  var apiKey = localStorage.getItem('askStatumKey');
+  if (!apiKey) {
+    showAskResult('<div class="ask-error">Please enter your OpenAI API key above to use AI mode.</div>');
+    document.getElementById('askLLMConfig').style.display = 'block';
+    return;
+  }
+  showAskLoading();
+
+  // Build context: summary stats + sample data
+  var cats = ['GSIB','Cat III','Cat IV','Regional','Community'];
+  var summary = cats.map(function(c) {
+    var g = BD.filter(function(b){return b.cat===c;});
+    return c + ': ' + g.length + ' banks, net=$' + (g.reduce(function(s,b){return s+b.net;},0)).toFixed(0) + 'M, lend=$' + (g.reduce(function(s,b){return s+b.lend;},0)).toFixed(0) + 'M, avgBPS=' + Math.round(g.reduce(function(s,b){return s+b.bps;},0)/g.length);
+  }).join('\n');
+
+  // Send relevant subset (filter by query keywords)
+  var subset = BD;
+  var stateMatch = null;
+  Object.keys(stateNames).forEach(function(sn) { if (q.toLowerCase().indexOf(sn) !== -1) stateMatch = stateNames[sn]; });
+  if (stateMatch) subset = subset.filter(function(b){return b.s === stateMatch;});
+  if (subset.length > 50) subset = subset.sort(function(a,b){return b.net-a.net;}).slice(0,50);
+  var bankData = JSON.stringify(subset.map(function(b) {
+    return {name:b.n, state:b.s, category:b.cat, assets_M:b.a, net_impact_M:b.net, lending_M:b.lend, aoci_M:b.aoci, oprisk_M:b.oprisk, bps:b.bps};
+  }));
+
+  var systemPrompt = 'You are Statum KPI, a regulatory analytics assistant. You answer questions about Basel III Endgame capital impact on U.S. banks using FFIEC data.\n'
+    + 'Dataset: 4,236 banks. Net impact: $96.3B. Lending relief: $161.7B. AOCI: -$52.5B. OpRisk (GSIBs only): -$7.5B. MSA: -$5.4B.\n'
+    + 'Category summary:\n' + summary + '\n\n'
+    + 'Respond with a JSON object: { "text": "narrative answer", "table": { "headers": [...], "rows": [[...], ...] } or null, "chart": { "type": "bar|pie|doughnut", "labels": [...], "datasets": [{ "label": "...", "data": [...] }], "title": "..." } or null }\n'
+    + 'Always include a chart when showing rankings or comparisons. Use dollar amounts in $M. Be precise and concise. Do not wrap JSON in markdown code blocks.';
+
+  fetch('https://api.openai.com/v1/chat/completions', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + apiKey },
+    body: JSON.stringify({
+      model: 'gpt-4o-mini',
+      messages: [
+        { role: 'system', content: systemPrompt },
+        { role: 'user', content: 'Bank data (subset): ' + bankData + '\n\nQuestion: ' + q }
+      ],
+      temperature: 0.3,
+      max_tokens: 2000
+    })
+  })
+  .then(function(res) { return res.json(); })
+  .then(function(data) {
+    if (data.error) {
+      showAskResult('<div class="ask-error">API error: ' + (data.error.message || 'Unknown error') + '</div>');
+      return;
+    }
+    var content = data.choices[0].message.content.trim();
+    // Strip markdown code fences if present
+    content = content.replace(/^```json\s*/i, '').replace(/^```\s*/i, '').replace(/\s*```$/i, '');
+    try {
+      var resp = JSON.parse(content);
+      var html = '';
+      if (resp.text) html += '<div class="ask-result-text">' + resp.text.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>') + '</div>';
+      if (resp.table && resp.table.headers) html += buildTable(resp.table.headers, resp.table.rows);
+      if (resp.chart) html += chartHTML();
+      showAskResult(html);
+      if (resp.chart) {
+        var colors = ['#FEC71E','#34B4DB','#FF7238','#16a34a','#8b5cf6','#dc2626','#64748b','#f59e0b'];
+        var ds = resp.chart.datasets.map(function(d, i) {
+          d.backgroundColor = d.backgroundColor || colors[i % colors.length];
+          return d;
+        });
+        renderAskChart(resp.chart.type || 'bar', resp.chart.labels, ds, resp.chart.title);
+      }
+    } catch(e) {
+      // If not valid JSON, show as text
+      showAskResult('<div class="ask-result-text">' + content.replace(/\n/g, '<br>') + '</div>');
+    }
+  })
+  .catch(function(err) {
+    showAskResult('<div class="ask-error">Request failed: ' + err.message + '</div>');
+  });
 }
 </script>
 </body>
