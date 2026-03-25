@@ -559,7 +559,7 @@ tbody tr.selected { background: #fff3cd !important; }
   <div class="kpi-card">
     <div class="kpi-label">AOCI Headwind</div>
     <div class="kpi-value val-red">&minus;$52.5B</div>
-    <div class="kpi-sub">Cat III/IV filter-through</div>
+    <div class="kpi-sub">Cat III/IV pass-through</div>
   </div>
   <div class="kpi-card">
     <div class="kpi-label">Op Risk (BIC&times;0.074)</div>
@@ -864,7 +864,7 @@ function buildSummary() {
     <div class="insight-card">
       <div class="ic-label">Cat III Headwinds</div>
       <div class="ic-num val-red">&minus;$7.7B</div>
-      <div class="ic-desc">Category III banks are the only cohort with a net negative impact, as $33.8B in AOCI filter-through overwhelms $27.9B in lending relief.</div>
+      <div class="ic-desc">Category III banks are the only cohort with a net negative impact, as $33.8B in AOCI pass-through overwhelms $27.9B in lending relief.</div>
     </div>
     <div class="insight-card">
       <div class="ic-label">GSIB Lending Boost</div>
@@ -1384,7 +1384,7 @@ function buildAOCIComp() {
 
   let h = `<div class="callout has-icon" style="margin-bottom:20px;">
     <div class="callout-title">AOCI Headwind: &minus;$52.5B</div>
-    <div class="callout-body">Category III and IV banks will newly be subject to AOCI filter-through, recognizing unrealized securities losses in regulatory capital. This is the single largest headwind, concentrated in 23 banks with large HTM portfolios and unrealized losses from 2022-2023 rate hikes.</div>
+    <div class="callout-body">Category III and IV banks will newly be subject to AOCI pass-through, recognizing unrealized securities losses in regulatory capital. This is the single largest headwind, concentrated in 23 banks with large HTM portfolios and unrealized losses from 2022-2023 rate hikes.</div>
   </div>`;
 
   h += `<div class="chart-box" style="margin:16px 0;"><h3>AOCI Impact by Bank ($M)</h3><canvas id="ch-aoci-bar" style="max-height:350px;"></canvas></div>`;
@@ -2146,7 +2146,7 @@ function buildGlossary() {
     <tr><td><strong>MSA (Mortgage Servicing Assets)</strong></td><td>The value a bank records for the right to collect payments on mortgages it services for others. Under the Basel III Endgame proposal, MSA are assigned a 250% risk weight, which increases risk-weighted assets and therefore raises the amount of capital a bank must hold against its servicing portfolio.</td></tr>
     <tr><td><strong>GSIB (Global Systemically Important Bank)</strong></td><td>The eight largest, most interconnected US banks whose failure could threaten the global financial system. They face the strictest capital requirements. The US GSIBs are: JPMorgan Chase, Bank of America, Citibank, Wells Fargo, Goldman Sachs, Morgan Stanley, BNY Mellon, and State Street.</td></tr>
     <tr><td><strong>Category III Bank</strong></td><td>Banks with $250 billion or more in total assets, or with significant nonbank activities. Subject to enhanced prudential standards including AOCI inclusion under the Endgame rule.</td></tr>
-    <tr><td><strong>Category IV Bank</strong></td><td>Banks with $100 billion to $250 billion in total assets. Also newly subject to AOCI filter-through under the Endgame rule.</td></tr>
+    <tr><td><strong>Category IV Bank</strong></td><td>Banks with $100 billion to $250 billion in total assets. Also newly subject to AOCI pass-through under the Endgame rule.</td></tr>
     <tr><td><strong>Regional Bank</strong></td><td>Banks with $10 billion to $100 billion in total assets. Not subject to AOCI or operational risk charges under the Endgame rule, but benefit from revised lending risk weights.</td></tr>
     <tr><td><strong>Community Bank</strong></td><td>Banks with less than $10 billion in total assets. Generally benefit the most in basis-point terms from the Endgame rule due to their loan-heavy balance sheets and lower risk weights.</td></tr>
     <tr><td><strong>BPS (Basis Points)</strong></td><td>One hundredth of a percentage point (0.01%). Used to express changes in capital ratios. For example, a 200 bps improvement means the CET1 ratio improves by 2.0 percentage points.</td></tr>
