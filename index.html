@@ -398,6 +398,12 @@ tbody tr.selected { background: #fff3cd !important; }
 .ask-statum-header h3 {
   color: var(--amber); font-size: 1.4rem; font-weight: 700; margin: 0;
 }
+.tab-btn-ask {
+  background: var(--amber) !important; color: #1a1a1a !important; font-weight: 700 !important;
+  border-radius: 4px !important;
+}
+.tab-btn-ask:hover { background: var(--orange) !important; color: #fff !important; }
+.tab-btn-ask.active { background: var(--orange) !important; color: #fff !important; border-color: var(--orange) !important; }
 .ask-statum-header .ask-badge {
   background: rgba(254,199,30,0.15); color: var(--amber); font-size: 0.65rem;
   font-weight: 600; padding: 3px 8px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.5px;
@@ -446,25 +452,25 @@ tbody tr.selected { background: #fff3cd !important; }
   padding: 24px; min-height: 80px; display: none;
 }
 .ask-result.visible { display: block; animation: fadeUp 0.3s ease; }
-.ask-result-text { color: #e2e8f0; font-size: 0.88rem; line-height: 1.65; margin-bottom: 16px; }
-.ask-result-text strong { color: var(--amber); font-weight: 600; }
+.ask-result-text { color: var(--dark); font-size: 0.88rem; line-height: 1.65; margin-bottom: 16px; }
+.ask-result-text strong { color: #b45309; font-weight: 600; }
 .ask-result-table {
   width: 100%; border-collapse: collapse; margin-bottom: 16px; font-size: 0.82rem;
 }
 .ask-result-table th {
-  background: rgba(254,199,30,0.12); color: var(--amber); text-align: left;
-  padding: 8px 12px; font-weight: 600; border-bottom: 1px solid #334155;
+  background: rgba(254,199,30,0.15); color: #92400e; text-align: left;
+  padding: 8px 12px; font-weight: 600; border-bottom: 1px solid var(--border);
 }
 .ask-result-table td {
-  color: #cbd5e1; padding: 7px 12px; border-bottom: 1px solid rgba(255,255,255,0.06);
+  color: var(--dark); padding: 7px 12px; border-bottom: 1px solid var(--border);
 }
-.ask-result-table tr:hover td { background: rgba(255,255,255,0.03); }
+.ask-result-table tr:hover td { background: rgba(254,199,30,0.05); }
 .ask-chart-container { max-width: 700px; margin: 16px auto 0; }
 .ask-loading {
-  display: flex; align-items: center; gap: 10px; color: #94a3b8; font-size: 0.85rem;
+  display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: 0.85rem;
 }
 .ask-loading .spinner {
-  width: 18px; height: 18px; border: 2px solid #334155;
+  width: 18px; height: 18px; border: 2px solid var(--border);
   border-top-color: var(--amber); border-radius: 50%;
   animation: spin 0.6s linear infinite;
 }
@@ -562,6 +568,7 @@ tbody tr.selected { background: #fff3cd !important; }
   <button class="tab-btn" data-tab="wl">Winners & Losers</button>
   <button class="tab-btn" data-tab="methodology">Methodology</button>
   <button class="tab-btn" data-tab="glossary">Glossary</button>
+  <button class="tab-btn tab-btn-ask" data-tab="askstatum">Ask Statum Anything</button>
 </div>
 
 <!-- TAB CONTENTS -->
@@ -574,6 +581,28 @@ tbody tr.selected { background: #fff3cd !important; }
 <div class="tab-content" id="tab-wl"></div>
 <div class="tab-content" id="tab-methodology"></div>
 <div class="tab-content" id="tab-glossary"></div>
+<div class="tab-content" id="tab-askstatum">
+  <div class="ask-statum-inner" style="max-width:900px;">
+    <div class="ask-statum-header">
+      <h3 style="color:var(--dark);font-size:1.3rem;font-weight:700;margin:0;">Ask Statum Anything</h3>
+      <span class="ask-badge">AI-Powered</span>
+    </div>
+    <div style="color:var(--muted);font-size:0.85rem;margin-bottom:18px;line-height:1.5;">Ask questions about capital impact data for 4,236 U.S. banks. Get answers with charts, tables, and analysis powered by AI.</div>
+    <div class="ask-input-row" style="margin-bottom:8px;">
+      <input type="text" id="askInput" placeholder="e.g. Which Texas community banks benefit the most?" onkeydown="if(event.key==='Enter')runAskStatum()" style="border-color:var(--border);background:#fff;color:var(--dark);">
+      <button id="askBtn" onclick="runAskStatum()">Ask</button>
+    </div>
+    <div class="ask-samples" style="margin-bottom:20px;">
+      <span class="ask-sample" onclick="askSample(this)" style="background:rgba(0,0,0,0.03);border-color:var(--border);color:var(--muted);">Top 10 banks by net benefit</span>
+      <span class="ask-sample" onclick="askSample(this)" style="background:rgba(0,0,0,0.03);border-color:var(--border);color:var(--muted);">Compare GSIBs vs community banks</span>
+      <span class="ask-sample" onclick="askSample(this)" style="background:rgba(0,0,0,0.03);border-color:var(--border);color:var(--muted);">Which states benefit most?</span>
+      <span class="ask-sample" onclick="askSample(this)" style="background:rgba(0,0,0,0.03);border-color:var(--border);color:var(--muted);">Banks in California over $1B assets</span>
+      <span class="ask-sample" onclick="askSample(this)" style="background:rgba(0,0,0,0.03);border-color:var(--border);color:var(--muted);">Average BPS impact by category</span>
+      <span class="ask-sample" onclick="askSample(this)" style="background:rgba(0,0,0,0.03);border-color:var(--border);color:var(--muted);">How does AOCI affect Category III banks?</span>
+    </div>
+    <div class="ask-result" id="askResult" style="background:rgba(0,0,0,0.02);border-color:var(--border);"></div>
+  </div>
+</div>
 
 <!-- EMAIL CAPTURE -->
 <div class="email-capture">
@@ -601,37 +630,6 @@ tbody tr.selected { background: #fff3cd !important; }
         <span style="color:var(--green);font-weight:600;">&#10003; Thank you! We'll be in touch shortly.</span>
       </div>
     </form>
-  </div>
-</div>
-
-<!-- ASK STATUM -->
-<div class="ask-statum" id="askStatumSection">
-  <div class="ask-statum-inner">
-    <div class="ask-statum-header">
-      <h3>Ask Statum</h3>
-      <span class="ask-badge">Beta</span>
-    </div>
-    <div class="ask-statum-desc">
-      Ask questions about capital impact data for 4,236 U.S. banks. Get answers with charts, tables, and analysis.
-    </div>
-    <div class="ask-mode-toggle">
-      <button class="ask-mode-btn active" onclick="setAskMode('local')" id="askModeLocal">Instant (Local Data)</button>
-      <button class="ask-mode-btn" onclick="setAskMode('llm')" id="askModeLLM">AI-Powered</button>
-    </div>
-    <div class="ask-input-row">
-      <input type="text" id="askInput" placeholder="e.g. Which Texas community banks benefit the most?" onkeydown="if(event.key==='Enter')runAskStatum()">
-      <button id="askBtn" onclick="runAskStatum()">Ask</button>
-    </div>
-    <div class="ask-samples">
-      <span class="ask-sample" onclick="askSample(this)">Top 10 banks by net benefit</span>
-      <span class="ask-sample" onclick="askSample(this)">Compare GSIBs vs community banks</span>
-      <span class="ask-sample" onclick="askSample(this)">Which states benefit most?</span>
-      <span class="ask-sample" onclick="askSample(this)">Banks in California over $1B assets</span>
-      <span class="ask-sample" onclick="askSample(this)">Average BPS impact by category</span>
-      <span class="ask-sample" onclick="askSample(this)">How does AOCI affect Category III banks?</span>
-    </div>
-    <div class="ask-result" id="askResult"></div>
-    <div id="askLLMConfig" style="display:none;"></div>
   </div>
 </div>
 
@@ -2145,14 +2143,7 @@ function buildGlossary() {
   `;
 }
 // ===== ASK STATUM ENGINE =====
-var askMode = 'local';
 var askChart = null;
-
-function setAskMode(mode) {
-  askMode = mode;
-  document.getElementById('askModeLocal').classList.toggle('active', mode === 'local');
-  document.getElementById('askModeLLM').classList.toggle('active', mode === 'llm');
-}
 
 function askSample(el) {
   document.getElementById('askInput').value = el.textContent;
@@ -2162,12 +2153,8 @@ function askSample(el) {
 function runAskStatum() {
   var q = document.getElementById('askInput').value.trim();
   if (!q) return;
-  if (askMode === 'llm') {
-    runAskLLM(q);
-  } else {
-    runAskLocal(q);
-  }
-  trackEvent('ask_statum', askMode, q);
+  runAskLLM(q);
+  trackEvent('ask_statum', 'ai', q);
 }
 
 // ===== HELPER FUNCTIONS =====
@@ -2200,12 +2187,12 @@ function renderAskChart(type, labels, datasets, title) {
     options: {
       responsive: true,
       plugins: {
-        title: { display: !!title, text: title || '', color: '#e2e8f0', font: { size: 13, weight: '600' } },
-        legend: { labels: { color: '#94a3b8', font: { size: 11 } } }
+        title: { display: !!title, text: title || '', color: '#333', font: { size: 13, weight: '600' } },
+        legend: { labels: { color: '#6b7280', font: { size: 11 } } }
       },
       scales: type === 'pie' || type === 'doughnut' ? {} : {
-        x: { ticks: { color: '#94a3b8', font: { size: 10 } }, grid: { color: 'rgba(255,255,255,0.05)' } },
-        y: { ticks: { color: '#94a3b8', font: { size: 10 } }, grid: { color: 'rgba(255,255,255,0.05)' } }
+        x: { ticks: { color: '#6b7280', font: { size: 10 } }, grid: { color: 'rgba(0,0,0,0.06)' } },
+        y: { ticks: { color: '#6b7280', font: { size: 10 } }, grid: { color: 'rgba(0,0,0,0.06)' } }
       }
     }
   });
