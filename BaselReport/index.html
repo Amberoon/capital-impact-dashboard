@@ -31,12 +31,6 @@ body {
 .header-center { text-align: center; flex: 1; padding: 10px 20px; }
 .header-title { font-size: 1.1rem; font-weight: 700; color: var(--dark); }
 .header-right { display: flex; align-items: center; gap: 12px; }
-.btn-dashboard {
-  padding: 10px 18px; background: var(--amber); color: #1a1a1a;
-  font-weight: 700; font-size: 0.82rem; border: none; border-radius: 8px;
-  cursor: pointer; text-decoration: none; white-space: nowrap;
-}
-.btn-dashboard:hover { background: var(--orange); color: #fff; }
 .content {
   max-width: 1100px; margin: 0 auto; padding: 32px 24px;
 }
@@ -44,13 +38,23 @@ body {
   text-align: center; margin-bottom: 28px;
 }
 .report-header h1 {
-  font-size: 1.8rem; font-weight: 700; color: var(--dark); margin-bottom: 8px;
+  font-size: 1.8rem; font-weight: 700; color: var(--dark); margin-bottom: 6px;
+}
+.report-header h2 {
+  font-size: 1.15rem; font-weight: 400; color: var(--muted); margin-bottom: 8px;
 }
 .report-header p {
-  color: var(--muted); font-size: 0.92rem; line-height: 1.6;
+  color: var(--muted); font-size: 0.85rem; line-height: 1.6;
+}
+.pdf-container {
+  background: #fff; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  overflow: hidden; border: 1px solid #e2e4e8; margin-bottom: 28px;
+}
+.pdf-container iframe {
+  width: 100%; height: 80vh; border: none; display: block;
 }
 .actions {
-  display: flex; justify-content: center; gap: 16px; margin-bottom: 28px; flex-wrap: wrap;
+  display: flex; justify-content: center; gap: 16px; margin-bottom: 20px; flex-wrap: wrap;
 }
 .btn-download {
   display: inline-flex; align-items: center; gap: 8px;
@@ -69,16 +73,10 @@ body {
   cursor: pointer; text-decoration: none; transition: all 0.2s;
 }
 .btn-secondary:hover { border-color: var(--amber); background: #fffdf5; }
-.pdf-container {
-  background: #fff; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-  overflow: hidden; border: 1px solid #e2e4e8;
-}
-.pdf-container iframe {
-  width: 100%; height: 80vh; border: none; display: block;
-}
+.btn-secondary svg { width: 20px; height: 20px; }
 .footer {
   background: #1a1a2e; color: rgba(255,255,255,0.65);
-  padding: 20px 28px; font-size: 0.75rem; margin-top: 40px;
+  padding: 20px 28px; font-size: 0.75rem;
   display: flex; justify-content: space-between; align-items: center;
   flex-wrap: wrap; gap: 12px;
 }
@@ -89,7 +87,6 @@ body {
   .report-header h1 { font-size: 1.4rem; }
 }
 </style>
-<!-- Google Analytics GA4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-MCWENBZ046"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -107,18 +104,20 @@ body {
     </a>
   </div>
   <div class="header-center">
-    <div class="header-title">Basel III Endgame Capital Impact Analysis</div>
+    <div class="header-title">Statum KPI by Amberoon</div>
   </div>
-  <div class="header-right">
-    <a href="/" class="btn-dashboard">Explore the Dashboard</a>
-  </div>
+  <div class="header-right"></div>
 </div>
 
 <div class="content">
   <div class="report-header">
-    <h1>Statum KPI Capital Impact Analysis</h1>
-    <p>Basel III Endgame: What Every Community Bank CEO Needs to Know<br>
-    Based on FFIEC CDR Call Report Data (Q4 2025) covering 4,236 U.S. banks</p>
+    <h1>Basel III Endgame Capital Impact Analysis</h1>
+    <h2>What Every Community Bank CEO Needs to Know</h2>
+    <p>Based on FFIEC CDR Call Report Data (Q4 2025) covering 4,236 U.S. banks | March 2026</p>
+  </div>
+
+  <div class="pdf-container">
+    <iframe src="Statum_KPI_Capital_Impact_Analysis.pdf" title="Basel III Endgame Capital Impact Analysis"></iframe>
   </div>
 
   <div class="actions">
@@ -127,19 +126,15 @@ body {
       Download PDF
     </a>
     <a href="/" class="btn-secondary">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
-      Interactive Dashboard
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0h4"/></svg>
+      Return to Dashboard
     </a>
-  </div>
-
-  <div class="pdf-container">
-    <iframe src="Statum_KPI_Capital_Impact_Analysis.pdf" title="Statum KPI Capital Impact Analysis"></iframe>
   </div>
 </div>
 
 <div class="footer">
   <div class="footer-brand">&copy; 2026 Amberoon Inc.</div>
-  <div>Source: Statum KPI data from Amberoon which is based on Q4 2025 Call Report data. Not investment, legal, or regulatory advice. &copy; 2026 Amberoon Inc.</div>
+  <div>Source: Statum KPI data from Amberoon which is based on Q4 2025 Call Report data. Not investment, legal, or regulatory advice.</div>
 </div>
 
 </body>
