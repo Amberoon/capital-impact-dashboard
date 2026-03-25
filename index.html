@@ -523,6 +523,86 @@ tbody tr.selected { background: #fff3cd !important; }
   .controls-bar input { width: 100%; }
 }
 
+/* ===== POWELL FRAMEWORK ===== */
+.powell-frame {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-sm);
+}
+.powell-quote {
+  font-size: 0.82rem;
+  color: var(--muted);
+  font-style: italic;
+  margin-bottom: 16px;
+  padding-left: 16px;
+  border-left: 3px solid var(--amber);
+  line-height: 1.6;
+}
+.powell-quote cite {
+  display: block;
+  font-style: normal;
+  font-weight: 600;
+  color: var(--dark);
+  margin-top: 4px;
+  font-size: 0.78rem;
+}
+.powell-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+}
+.powell-col {
+  background: var(--light-bg);
+  border-radius: 8px;
+  padding: 16px 18px;
+  border-top: 3px solid var(--border);
+}
+.powell-col.know { border-top-color: var(--green); }
+.powell-col.dontknow { border-top-color: var(--orange); }
+.powell-col.think { border-top-color: var(--amber); }
+.powell-col h4 {
+  font-size: 0.82rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.powell-col h4 .pw-icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  color: #fff;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+.powell-col.know h4 .pw-icon { background: var(--green); }
+.powell-col.dontknow h4 .pw-icon { background: var(--orange); }
+.powell-col.think h4 .pw-icon { background: var(--amber); color: #1a1a1a; }
+.powell-col ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.powell-col li {
+  font-size: 0.78rem;
+  color: #555;
+  line-height: 1.55;
+  padding: 5px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+}
+.powell-col li:last-child { border-bottom: none; }
+@media (max-width: 900px) {
+  .powell-grid { grid-template-columns: 1fr; }
+}
+
 /* ===== ASSUMPTIONS PANEL ===== */
 .assumptions-bar {
   background: linear-gradient(135deg, #fffde7 0%, #fff8e1 100%);
@@ -763,8 +843,8 @@ tbody tr.selected { background: #fff3cd !important; }
 <div class="email-capture">
   <div class="email-capture-inner">
     <div class="email-capture-text">
-      <h3>Want deeper insights for your bank?</h3>
-      <p>Statum KPI delivers predictive performance analysis for banks with customized peer grouping.</p>
+      <h3>Your bank has better data than our model. Let us use it.</h3>
+      <p>Our estimates use public Call Report data. With your institution-specific LTV, ERBA election, and portfolio data, we can deliver a precise capital impact analysis tailored to your bank.</p>
     </div>
     <form class="email-form" id="emailForm" onsubmit="return handleEmailSubmit(event)">
       <!-- Honeypot: hidden from humans, bots fill it -->
@@ -966,6 +1046,57 @@ function buildSummary() {
   }
 
   let h = '';
+
+  // Powell Framework
+  h += '<div class="powell-frame">';
+  h += '<div class="powell-quote">"Tell me what you know. Tell me what you don\'t know. Then tell me what you think. Always distinguish which from which."<cite>Colin Powell, It Worked for Me: In Life and Leadership</cite></div>';
+  h += '<div class="powell-grid">';
+
+  // WHAT WE KNOW
+  h += '<div class="powell-col know">';
+  h += '<h4><span class="pw-icon">1</span> What We Know</h4>';
+  h += '<ul>';
+  h += '<li>The Fed, OCC, and FDIC published the Basel III Endgame re-proposal on March 19, 2026 with explicit risk weight schedules</li>';
+  h += '<li>Residential mortgage risk weights drop to 20-75% based on LTV (from ~50-65% current)</li>';
+  h += '<li>AOCI pass-through applies to Category III/IV banks (23 institutions)</li>';
+  h += '<li>Operational risk charge (BIC x 7.4%) applies to GSIBs only</li>';
+  h += '<li>MSA gets a 250% risk weight</li>';
+  h += '<li>Every bank\'s actual loan portfolio, CET1 capital, and RWA from Q4 2025 Call Reports (4,236 banks)</li>';
+  h += '</ul></div>';
+
+  // WHAT WE DON'T KNOW
+  h += '<div class="powell-col dontknow">';
+  h += '<h4><span class="pw-icon">2</span> What We Don\'t Know</h4>';
+  h += '<ul>';
+  h += '<li>Final rule text after comment period (comment period closes mid-2026)</li>';
+  h += '<li>Which banks will elect ERBA opt-in vs. stay on the Standardized Approach</li>';
+  h += '<li>Exact CRE risk weights for each bank (depends on property-level LTV data we do not have)</li>';
+  h += '<li>How banks will restructure portfolios in response</li>';
+  h += '<li>Whether the effective date (July 2028) will hold or shift</li>';
+  h += '<li>Individual bank loan-level LTV distributions (we use blended estimates)</li>';
+  h += '</ul></div>';
+
+  // WHAT WE THINK
+  h += '<div class="powell-col think">';
+  h += '<h4><span class="pw-icon">3</span> What We Think</h4>';
+  h += '<ul>';
+  h += '<li>Net capital relief of ~$96B across the system, with 99.5% of banks benefiting</li>';
+  h += '<li>Most banks will elect ERBA where favorable, making our CRE (85%) and Consumer (75%) estimates reasonable</li>';
+  h += '<li>Community banks benefit disproportionately (+77 bps avg) due to loan-heavy balance sheets</li>';
+  h += '<li>Category III banks face net headwinds from AOCI pass-through overwhelming lending relief</li>';
+  h += '<li>The Fed\'s own estimates (4.8%/5.2%/7.8% CET1 decreases) are directionally consistent with our bank-level results</li>';
+  h += '<li>Under the Standardized Approach alone (no ERBA), net impact would be ~$68B instead of ~$96B</li>';
+  h += '</ul></div>';
+
+  h += '</div>';
+  h += '<div style="margin-top:16px;padding:14px 18px;background:#fffdf0;border:1px solid var(--amber);border-radius:8px;font-size:0.82rem;color:#555;line-height:1.55;">';
+  h += '<span style="font-weight:700;color:var(--dark);">Your bank knows more than we do.</span> ';
+  h += 'Our estimates use publicly available Call Report data. But your bank has better data: your actual LTV distributions, your ERBA election plans, your AFS portfolio, and your restructuring strategy. ';
+  h += '8 of our 12 unknowns are things you already know about your own institution. ';
+  h += 'Use the <a href="#" onclick="document.querySelector(\'[data-tab=yourbank]\').click();return false;">Your Bank calculator</a> to input your data, ';
+  h += 'or contact <a href="mailto:statum@amberoon.com">statum@amberoon.com</a> for a customized institution-level analysis.';
+  h += '</div></div>';
+
   // Waterfall chart
   h += `<div class="grid-2">
     <div class="chart-box"><h3>Capital Impact Waterfall ($B)</h3><canvas id="ch-waterfall"></canvas></div>
@@ -2206,7 +2337,7 @@ function buildYourBank() {
         <div class="calc-result-card" id="yb-r-freed"><div class="label">CET1 Capital Freed</div><div class="value">—</div><div class="sub">Available for lending, buybacks, dividends</div></div>
         <div class="calc-result-card" id="yb-r-lendcap"><div class="label">Additional Lending Capacity</div><div class="value">—</div><div class="sub">At blended ~70% average risk weight</div></div>
       </div>
-      <p style="color:var(--muted);font-size:0.75rem;margin-top:16px;">These are Statum KPI scenario estimates based on proposed Basel III Endgame rules (March 19, 2026 NPR). Default risk weights reflect an ERBA opt-in scenario. Actual impact will depend on your bank's specific exposure characteristics, regulatory elections, and final rule text. Use the Risk Weight Assumptions section above to adjust assumptions. Consult your regulatory advisors and risk management team for institution-specific capital planning. Not investment, legal, or regulatory advice.</p>
+      <p style="color:var(--muted);font-size:0.75rem;margin-top:16px;">These are Statum KPI scenario estimates based on the March 19, 2026 NPR. Your bank has better data than our system-wide model: your actual LTV distributions, your ERBA election plans, your off-balance-sheet commitments, and your AFS portfolio. Adjust the risk weights above to match your expectations, or contact <a href="mailto:statum@amberoon.com" style="color:var(--teal);">statum@amberoon.com</a> for a customized institution-level analysis. Not investment, legal, or regulatory advice.</p>
     </div>
   </div>
   `;
