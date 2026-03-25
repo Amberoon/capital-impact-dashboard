@@ -522,6 +522,140 @@ tbody tr.selected { background: #fff3cd !important; }
   .tab-btn { padding: 10px 14px; font-size: 0.72rem; }
   .controls-bar input { width: 100%; }
 }
+
+/* ===== ASSUMPTIONS PANEL ===== */
+.assumptions-bar {
+  background: linear-gradient(135deg, #fffde7 0%, #fff8e1 100%);
+  border: 1px solid var(--amber);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  margin: 16px 0;
+  font-size: 0.82rem;
+}
+.assumptions-bar summary {
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: var(--dark);
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.assumptions-bar summary::-webkit-details-marker { display: none; }
+.assumptions-bar summary::before {
+  content: '\25B6';
+  font-size: 0.65rem;
+  transition: transform 0.2s;
+  color: var(--amber);
+}
+.assumptions-bar[open] summary::before { transform: rotate(90deg); }
+.assumptions-bar .ab-content { margin-top: 12px; }
+.assumptions-bar .ab-grid {
+  display: grid;
+  grid-template-columns: 1fr 100px 100px 1fr;
+  gap: 4px 12px;
+  font-size: 0.78rem;
+  margin-top: 8px;
+}
+.assumptions-bar .ab-grid .ab-header {
+  font-weight: 700;
+  color: #555;
+  text-transform: uppercase;
+  font-size: 0.68rem;
+  letter-spacing: 0.05em;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--border);
+}
+.assumptions-bar .ab-grid .ab-val { text-align: center; }
+.estimate-badge {
+  display: inline-block;
+  background: rgba(254,199,30,0.18);
+  color: #92400e;
+  font-size: 0.6rem;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  vertical-align: middle;
+  margin-left: 6px;
+}
+.disclaimer-note {
+  font-size: 0.72rem;
+  color: var(--muted);
+  font-style: italic;
+  margin-top: 6px;
+  line-height: 1.5;
+}
+
+/* ===== RISK WEIGHT OVERRIDES IN CALCULATOR ===== */
+.rw-override-section {
+  background: #f8f9fb;
+  border: 1px dashed var(--border);
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin-top: 16px;
+}
+.rw-override-section h5 {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--dark);
+  margin-bottom: 10px;
+}
+.rw-override-grid {
+  display: grid;
+  grid-template-columns: 1fr 90px 90px 90px 1fr;
+  gap: 6px 10px;
+  align-items: center;
+  font-size: 0.8rem;
+}
+.rw-override-grid .rw-hdr {
+  font-weight: 700;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #555;
+  text-align: center;
+}
+.rw-override-grid label { font-weight: 600; color: var(--dark); }
+.rw-override-grid input {
+  padding: 6px 8px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-size: 0.8rem;
+  text-align: center;
+  width: 100%;
+  background: #fff;
+}
+.rw-override-grid input:focus {
+  border-color: var(--amber);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(254,199,30,0.2);
+}
+.rw-override-grid .rw-note { font-size: 0.7rem; color: var(--muted); }
+.rw-preset-btns {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.rw-preset-btn {
+  padding: 6px 14px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: #fff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.rw-preset-btn:hover { background: #f0f0f0; }
+.rw-preset-btn.active {
+  background: var(--amber);
+  color: #1a1a1a;
+  border-color: var(--amber);
+}
+
 </style>
 </head>
 <body>
@@ -533,7 +667,7 @@ tbody tr.selected { background: #fff3cd !important; }
   </div>
   <div class="header-center">
     <div class="header-title">Basel III Endgame Capital Impact Estimator</div>
-    
+    <div class="header-subtitle">Statum KPI Scenario Estimates Based on Q4 2025 Call Report Data</div>
   </div>
   <div class="header-right">
     <button class="ask-header-btn" onclick="document.querySelector('[data-tab=askstatum]').click();">
@@ -547,12 +681,12 @@ tbody tr.selected { background: #fff3cd !important; }
 <!-- KPI BAR -->
 <div class="kpi-bar">
   <div class="kpi-card">
-    <div class="kpi-label">Net Capital Impact</div>
+    <div class="kpi-label">Net Capital Impact<span class="estimate-badge">Estimate</span></div>
     <div class="kpi-value val-green">$96.3B</div>
     <div class="kpi-sub">Fed estimate: Cat I/II: &minus;4.8% CET1; Cat III/IV: &minus;5.2% (all-in); Smaller: &minus;7.8%</div>
   </div>
   <div class="kpi-card">
-    <div class="kpi-label">Lending Relief</div>
+    <div class="kpi-label">Lending Relief<span class="estimate-badge">Estimate</span></div>
     <div class="kpi-value val-green">+$161.7B</div>
     <div class="kpi-sub">Lower risk weights</div>
   </div>
@@ -1326,7 +1460,7 @@ function buildLendingComp() {
 
   let h = `<div class="callout has-icon" style="margin-bottom:20px;">
     <div class="callout-title">Lending Relief: +$161.7B</div>
-    <div class="callout-body">Lower risk weights on residential (38% blended vs ~50% current), CRE (95% vs 100%), C&I (95% vs 100%), and consumer (90% vs mixed 75-100%) loans free up capital across all bank categories. Community banks see the largest proportional benefit due to heavy loan concentration.</div>
+    <div class="callout-body">Lower risk weights on residential (38% blended vs ~65% current), CRE (85% ERBA est. vs 100%), C&amp;I (~89% ERBA blended vs 100%), and consumer (75% ERBA qualifying vs 87.5%) loans free up capital across all bank categories. Community banks see the largest proportional benefit due to heavy loan concentration. CRE and consumer estimates reflect ERBA opt-in; under NPR Standardized Approach alone, CRE = 95% and consumer = 90%.</div>
   </div>`;
 
   h += `<div class="grid-2">
@@ -1640,8 +1774,8 @@ function buildMethodology() {
         <tr><td>GSIB</td><td>9 US Global Systemically Important Banks (Morgan Stanley split into two entities)</td><td>9</td></tr>
         <tr><td>Category III</td><td>Assets $250B+ or significant nonbank activities</td><td>8</td></tr>
         <tr><td>Category IV</td><td>Assets $100B&ndash;$250B</td><td>15</td></tr>
-        <tr><td>Regional</td><td>Assets $10B&ndash;$100B</td><td>72</td></tr>
-        <tr><td>Community</td><td>Assets &lt;$10B</td><td>4,188</td></tr>
+        <tr><td>Regional *</td><td>Assets $20B&ndash;$100B (Statum KPI segmentation)</td><td>70</td></tr>
+        <tr><td>Community *</td><td>Assets &lt;$20B (Statum KPI segmentation)</td><td>4,136</td></tr>
       </table>
     </div>
 
@@ -1673,7 +1807,7 @@ function buildMethodology() {
 
     <div class="method-section">
       <h4>Data Coverage Note</h4>
-      <p>493 banks (11.6%) use estimated loan composition where FFIEC data was not granular enough to decompose loan categories. All GSIBs, most Category III/IV, and most Regional banks have actual FFIEC-derived loan composition data. For those 493 banks, blended sector averages were applied based on peer group and asset size.</p>
+      <p>169 banks (4.0%) use estimated loan composition based on peer-group averages where FFIEC data was not granular enough to decompose individual loan categories. All GSIBs, Category III/IV, and Regional banks have actual FFIEC-derived loan composition data. For those 169 banks, blended sector averages were applied based on regulatory category and asset size tier. These banks are concentrated in the Community bank segment and represent less than 2% of total system assets.</p>
     </div>
 
 
@@ -2020,7 +2154,7 @@ function buildYourBank() {
         <div class="calc-result-card" id="yb-r-freed"><div class="label">CET1 Capital Freed</div><div class="value">—</div><div class="sub">Available for lending, buybacks, dividends</div></div>
         <div class="calc-result-card" id="yb-r-lendcap"><div class="label">Additional Lending Capacity</div><div class="value">—</div><div class="sub">At blended ~70% average risk weight</div></div>
       </div>
-      <p style="color:var(--muted);font-size:0.75rem;margin-top:16px;">These are estimates based on the proposed Basel III Endgame rules. Actual impact will depend on your bank's specific exposure characteristics. Consult your risk management team for precise calculations.</p>
+      <p style="color:var(--muted);font-size:0.75rem;margin-top:16px;">These are Statum KPI scenario estimates based on proposed Basel III Endgame rules (March 19, 2026 NPR). Default risk weights reflect an ERBA opt-in scenario. Actual impact will depend on your bank's specific exposure characteristics, regulatory elections, and final rule text. Use the Risk Weight Assumptions section above to adjust assumptions. Consult your regulatory advisors and risk management team for institution-specific capital planning. Not investment, legal, or regulatory advice.</p>
     </div>
   </div>
   `;
@@ -2044,11 +2178,35 @@ function calcYourBank() {
 
   document.getElementById('yb-total-loans').textContent = '$' + totalLoans.toLocaleString();
 
-  // Lending relief (RWA reduction)
-  const resiRelief = resi * 0.27;  // 65% current → 38% NPR
-  const creRelief = cre * 0.15;    // 100% → 85%
-  const ciRelief = ci * 0.11;      // 100% → 95% blended (IG at 65%)
-  const conRelief = con * 0.125;   // 87.5% → 75% (relief)
+  // Risk weight overrides (user-adjustable)
+  const rwResiOld = (parseFloat(document.getElementById('yb-rw-resi-old').value) || 65) / 100;
+  const rwResiNew = (parseFloat(document.getElementById('yb-rw-resi-new').value) || 38) / 100;
+  const rwCreOld = (parseFloat(document.getElementById('yb-rw-cre-old').value) || 100) / 100;
+  const rwCreNew = (parseFloat(document.getElementById('yb-rw-cre-new').value) || 85) / 100;
+  const rwCiOld = (parseFloat(document.getElementById('yb-rw-ci-old').value) || 100) / 100;
+  const rwCiNew = (parseFloat(document.getElementById('yb-rw-ci-new').value) || 89) / 100;
+  const rwConOld = (parseFloat(document.getElementById('yb-rw-con-old').value) || 87.5) / 100;
+  const rwConNew = (parseFloat(document.getElementById('yb-rw-con-new').value) || 75) / 100;
+
+  // Show delta values
+  const dResi = ((rwResiOld - rwResiNew) * 100).toFixed(1);
+  const dCre = ((rwCreOld - rwCreNew) * 100).toFixed(1);
+  const dCi = ((rwCiOld - rwCiNew) * 100).toFixed(1);
+  const dCon = ((rwConOld - rwConNew) * 100).toFixed(1);
+  document.getElementById('yb-rw-resi-delta').textContent = (dResi > 0 ? '-' : '+') + Math.abs(dResi) + 'pp';
+  document.getElementById('yb-rw-resi-delta').style.color = dResi > 0 ? '#16a34a' : '#dc2626';
+  document.getElementById('yb-rw-cre-delta').textContent = (dCre > 0 ? '-' : '+') + Math.abs(dCre) + 'pp';
+  document.getElementById('yb-rw-cre-delta').style.color = dCre > 0 ? '#16a34a' : '#dc2626';
+  document.getElementById('yb-rw-ci-delta').textContent = (dCi > 0 ? '-' : '+') + Math.abs(dCi) + 'pp';
+  document.getElementById('yb-rw-ci-delta').style.color = dCi > 0 ? '#16a34a' : '#dc2626';
+  document.getElementById('yb-rw-con-delta').textContent = (dCon > 0 ? '-' : '+') + Math.abs(dCon) + 'pp';
+  document.getElementById('yb-rw-con-delta').style.color = dCon > 0 ? '#16a34a' : '#dc2626';
+
+  // Lending relief (RWA reduction) using user-adjustable risk weights
+  const resiRelief = resi * (rwResiOld - rwResiNew);
+  const creRelief = cre * (rwCreOld - rwCreNew);
+  const ciRelief = ci * (rwCiOld - rwCiNew);
+  const conRelief = con * (rwConOld - rwConNew);
   const totalLendRWA = resiRelief + creRelief + ciRelief + conRelief;
   const cet1Ratio = rwa > 0 ? cet1 / rwa : 0;
   const lendCapital = totalLendRWA * cet1Ratio;
@@ -2123,6 +2281,33 @@ function calcYourBank() {
   window._calcTrackTimer = setTimeout(function() {
     trackEvent('calculator_used', 'your_bank', cat + '|assets:' + v('yb-assets') + '|net:' + net.toFixed(0));
   }, 2000);
+}
+
+
+// ===== RISK WEIGHT PRESETS =====
+function setRWPreset(preset) {
+  document.querySelectorAll('.rw-preset-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  
+  const presets = {
+    erba: { resiOld: 65, resiNew: 38, creOld: 100, creNew: 85, ciOld: 100, ciNew: 89, conOld: 87.5, conNew: 75 },
+    sa:   { resiOld: 65, resiNew: 38, creOld: 100, creNew: 95, ciOld: 100, ciNew: 95, conOld: 87.5, conNew: 90 },
+    custom: null
+  };
+  
+  if (preset === 'custom') return; // Don't change values, let user edit
+  
+  const p = presets[preset];
+  document.getElementById('yb-rw-resi-old').value = p.resiOld;
+  document.getElementById('yb-rw-resi-new').value = p.resiNew;
+  document.getElementById('yb-rw-cre-old').value = p.creOld;
+  document.getElementById('yb-rw-cre-new').value = p.creNew;
+  document.getElementById('yb-rw-ci-old').value = p.ciOld;
+  document.getElementById('yb-rw-ci-new').value = p.ciNew;
+  document.getElementById('yb-rw-con-old').value = p.conOld;
+  document.getElementById('yb-rw-con-new').value = p.conNew;
+  
+  calcYourBank();
 }
 
 function buildGlossary() {
@@ -2532,7 +2717,7 @@ function runAskLLM(q) {
 
   var systemPrompt = 'You are Statum KPI, a regulatory analytics assistant by Amberoon Inc. You answer questions about Basel III Endgame capital impact on U.S. banks using FFIEC Call Report data.\n'
     + 'Dataset: 4,236 banks. Net impact: $96.3B. Lending relief: $161.7B. AOCI: -$52.5B. OpRisk (GSIBs only, Cat I/II): -$7.5B. MSA: -$5.4B.\n'
-    + 'Risk weights: Resi 38% blended, CRE 85%, Multifamily 70%, ADC 130%, C&I 95% (IG 65%), Consumer 75%, Other 90%, MSA 250%.\n'
+    + 'Risk weights (Statum KPI estimates, ERBA opt-in scenario): Resi 38% blended, CRE 85% (SA=95%), Multifamily 70%, ADC 130%, C&I ~89% blended (SA=95%), Consumer 75% (SA=90%), Other 90%, MSA 250%. All figures are estimates, not regulatory determinations.\n'
     + 'Category summary:\n' + summary + '\n\n'
     + 'Respond ONLY with a JSON object (no markdown, no code fences): { "text": "narrative answer", "table": { "headers": [...], "rows": [[...], ...] } or null, "chart": { "type": "bar|pie|doughnut", "labels": [...], "datasets": [{ "label": "...", "data": [...] }], "title": "..." } or null }\n'
     + 'Always include a chart when showing rankings or comparisons. Use dollar amounts in $M. Be precise, concise, and professional.';
