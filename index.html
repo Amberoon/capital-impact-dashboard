@@ -631,13 +631,7 @@ tbody tr.selected { background: #fff3cd !important; }
       <span class="ask-sample" onclick="askSample(this)">How does AOCI affect Category III banks?</span>
     </div>
     <div class="ask-result" id="askResult"></div>
-    <div id="askLLMConfig" style="display:none;margin-top:12px;">
-      <div style="display:flex;gap:8px;align-items:center;">
-        <input type="password" id="askAPIKey" placeholder="Enter OpenAI API key to enable AI mode" style="flex:1;padding:10px 14px;border:1px solid #334155;border-radius:6px;background:#1e293b;color:#e2e8f0;font-size:0.82rem;outline:none;">
-        <button onclick="saveAskKey()" style="padding:10px 18px;background:#334155;color:#94a3b8;border:none;border-radius:6px;font-size:0.8rem;font-weight:600;cursor:pointer;">Save Key</button>
-      </div>
-      <div style="color:#64748b;font-size:0.72rem;margin-top:6px;">Your key is stored locally in your browser only. Never sent to our servers.</div>
-    </div>
+    <div id="askLLMConfig" style="display:none;"></div>
   </div>
 </div>
 
@@ -2158,19 +2152,6 @@ function setAskMode(mode) {
   askMode = mode;
   document.getElementById('askModeLocal').classList.toggle('active', mode === 'local');
   document.getElementById('askModeLLM').classList.toggle('active', mode === 'llm');
-  document.getElementById('askLLMConfig').style.display = mode === 'llm' ? 'block' : 'none';
-  // Check if key already saved
-  if (mode === 'llm' && localStorage.getItem('askStatumKey')) {
-    document.getElementById('askAPIKey').value = '********';
-  }
-}
-
-function saveAskKey() {
-  var k = document.getElementById('askAPIKey').value.trim();
-  if (k && k !== '********') {
-    localStorage.setItem('askStatumKey', k);
-    document.getElementById('askAPIKey').value = '********';
-  }
 }
 
 function askSample(el) {
@@ -2518,15 +2499,11 @@ function processLocalQuery(q) {
   showAskResult(text);
 }
 
-// ===== LLM MODE =====
+// ===== LLM MODE (Claude via Vercel proxy) =====
+var ASK_API_URL = 'https://statum-ask-api.vercel.app/api/ask';
+
 function runAskLLM(q) {
-  var apiKey = localStorage.getItem('askStatumKey');
-  if (!apiKey) {
-    showAskResult('<div class="ask-error">Please enter your OpenAI API key above to use AI mode.</div>');
-    document.getElementById('askLLMConfig').style.display = 'block';
-    return;
-  }
-  showAskLoading();
+  showAskResult('<div class="ask-loading"><div class="spinner"></div>Asking Statum AI...</div>');
 
   // Build context: summary stats + sample data
   var cats = ['GSIB','Cat III','Cat IV','Regional','Community'];
@@ -2545,38 +2522,37 @@ function runAskLLM(q) {
     return {name:b.n, state:b.s, category:b.cat, assets_M:b.a, net_impact_M:b.net, lending_M:b.lend, aoci_M:b.aoci, oprisk_M:b.oprisk, bps:b.bps};
   }));
 
-  var systemPrompt = 'You are Statum KPI, a regulatory analytics assistant. You answer questions about Basel III Endgame capital impact on U.S. banks using FFIEC data.\n'
-    + 'Dataset: 4,236 banks. Net impact: $96.3B. Lending relief: $161.7B. AOCI: -$52.5B. OpRisk (GSIBs only): -$7.5B. MSA: -$5.4B.\n'
+  var systemPrompt = 'You are Statum KPI, a regulatory analytics assistant by Amberoon Inc. You answer questions about Basel III Endgame capital impact on U.S. banks using FFIEC Call Report data.\n'
+    + 'Dataset: 4,236 banks. Net impact: $96.3B. Lending relief: $161.7B. AOCI: -$52.5B. OpRisk (GSIBs only, Cat I/II): -$7.5B. MSA: -$5.4B.\n'
+    + 'Risk weights: Resi 38% blended, CRE 85%, Multifamily 70%, ADC 130%, C&I 95% (IG 65%), Consumer 75%, Other 90%, MSA 250%.\n'
     + 'Category summary:\n' + summary + '\n\n'
-    + 'Respond with a JSON object: { "text": "narrative answer", "table": { "headers": [...], "rows": [[...], ...] } or null, "chart": { "type": "bar|pie|doughnut", "labels": [...], "datasets": [{ "label": "...", "data": [...] }], "title": "..." } or null }\n'
-    + 'Always include a chart when showing rankings or comparisons. Use dollar amounts in $M. Be precise and concise. Do not wrap JSON in markdown code blocks.';
+    + 'Respond ONLY with a JSON object (no markdown, no code fences): { "text": "narrative answer", "table": { "headers": [...], "rows": [[...], ...] } or null, "chart": { "type": "bar|pie|doughnut", "labels": [...], "datasets": [{ "label": "...", "data": [...] }], "title": "..." } or null }\n'
+    + 'Always include a chart when showing rankings or comparisons. Use dollar amounts in $M. Be precise, concise, and professional.';
 
-  fetch('https://api.openai.com/v1/chat/completions', {
+  fetch(ASK_API_URL, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + apiKey },
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      model: 'gpt-4o-mini',
+      system: systemPrompt,
       messages: [
-        { role: 'system', content: systemPrompt },
         { role: 'user', content: 'Bank data (subset): ' + bankData + '\n\nQuestion: ' + q }
-      ],
-      temperature: 0.3,
-      max_tokens: 2000
+      ]
     })
   })
   .then(function(res) { return res.json(); })
   .then(function(data) {
     if (data.error) {
-      showAskResult('<div class="ask-error">API error: ' + (data.error.message || 'Unknown error') + '</div>');
+      showAskResult('<div class="ask-error">API error: ' + (data.error.message || JSON.stringify(data.error)) + '</div>');
       return;
     }
-    var content = data.choices[0].message.content.trim();
+    var content = '';
+    if (data.content && data.content[0]) content = data.content[0].text.trim();
     // Strip markdown code fences if present
     content = content.replace(/^```json\s*/i, '').replace(/^```\s*/i, '').replace(/\s*```$/i, '');
     try {
       var resp = JSON.parse(content);
       var html = '';
-      if (resp.text) html += '<div class="ask-result-text">' + resp.text.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>') + '</div>';
+      if (resp.text) html += '<div class="ask-result-text">' + resp.text.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>') + '</div>';
       if (resp.table && resp.table.headers) html += buildTable(resp.table.headers, resp.table.rows);
       if (resp.chart) html += chartHTML();
       showAskResult(html);
@@ -2589,12 +2565,12 @@ function runAskLLM(q) {
         renderAskChart(resp.chart.type || 'bar', resp.chart.labels, ds, resp.chart.title);
       }
     } catch(e) {
-      // If not valid JSON, show as text
-      showAskResult('<div class="ask-result-text">' + content.replace(/\n/g, '<br>') + '</div>');
+      // If not valid JSON, show as formatted text
+      showAskResult('<div class="ask-result-text">' + content.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>') + '</div>');
     }
   })
   .catch(function(err) {
-    showAskResult('<div class="ask-error">Request failed: ' + err.message + '</div>');
+    showAskResult('<div class="ask-error">Request failed: ' + err.message + '. Try Instant mode instead.</div>');
   });
 }
 </script>
