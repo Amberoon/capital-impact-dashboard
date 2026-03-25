@@ -844,7 +844,7 @@ tbody tr.selected { background: #fff3cd !important; }
   <div class="email-capture-inner">
     <div class="email-capture-text">
       <h3>Your bank has better data than our model. Let us use it.</h3>
-      <p>Our estimates use public Call Report data. With your institution-specific LTV, ERBA election, and portfolio data, we can deliver a precise capital impact analysis tailored to your bank.</p>
+      <p>Our estimates use public Call Report data and are open to scrutiny. If our assumptions need refining, we want to hear it. Share your perspective, challenge our methodology, or let us build a precise analysis using your institution-specific data.</p>
     </div>
     <form class="email-form" id="emailForm" onsubmit="return handleEmailSubmit(event)">
       <!-- Honeypot: hidden from humans, bots fill it -->
@@ -1094,7 +1094,7 @@ function buildSummary() {
   h += 'Our estimates use publicly available Call Report data. But your bank has better data: your actual LTV distributions, your ERBA election plans, your AFS portfolio, and your restructuring strategy. ';
   h += '8 of our 12 unknowns are things you already know about your own institution. ';
   h += 'Use the <a href="#" onclick="document.querySelector(\'[data-tab=yourbank]\').click();return false;">Your Bank calculator</a> to input your data, ';
-  h += 'or contact <a href="mailto:statum@amberoon.com">statum@amberoon.com</a> for a customized institution-level analysis.';
+  h += 'or contact <a href="mailto:statum@amberoon.com">statum@amberoon.com</a> for a customized analysis. We welcome feedback on our assumptions and methodology.';
   h += '</div></div>';
 
   // Waterfall chart
@@ -2337,7 +2337,7 @@ function buildYourBank() {
         <div class="calc-result-card" id="yb-r-freed"><div class="label">CET1 Capital Freed</div><div class="value">—</div><div class="sub">Available for lending, buybacks, dividends</div></div>
         <div class="calc-result-card" id="yb-r-lendcap"><div class="label">Additional Lending Capacity</div><div class="value">—</div><div class="sub">At blended ~70% average risk weight</div></div>
       </div>
-      <p style="color:var(--muted);font-size:0.75rem;margin-top:16px;">These are Statum KPI scenario estimates based on the March 19, 2026 NPR. Your bank has better data than our system-wide model: your actual LTV distributions, your ERBA election plans, your off-balance-sheet commitments, and your AFS portfolio. Adjust the risk weights above to match your expectations, or contact <a href="mailto:statum@amberoon.com" style="color:var(--teal);">statum@amberoon.com</a> for a customized institution-level analysis. Not investment, legal, or regulatory advice.</p>
+      <p style="color:var(--muted);font-size:0.75rem;margin-top:16px;">These are Statum KPI scenario estimates based on the March 19, 2026 NPR. Your bank has better data than our system-wide model: your actual LTV distributions, your ERBA election plans, your off-balance-sheet commitments, and your AFS portfolio. Adjust the risk weights above to match your expectations, or contact <a href="mailto:statum@amberoon.com" style="color:var(--teal);">statum@amberoon.com</a> for a customized analysis, or to share feedback on our assumptions. We built this to be challenged. Not investment, legal, or regulatory advice.</p>
     </div>
   </div>
   `;
