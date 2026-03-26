@@ -2539,12 +2539,11 @@ function runAskStatum() {
   trackEvent('ask_statum', 'ai', q);
 }
 
-// ===== HELPER FUNCTIONS =====
-function fmt(v) {
-  if (Math.abs(v) >= 1e3) return '$' + (v/1e3).toFixed(1) + 'T';
-  if (Math.abs(v) >= 1) return '$' + v.toFixed(1) + 'B';
-  return '$' + (v * 1e3).toFixed(1) + 'M';
-}
+// ===== HELPER FUNCTIONS (Ask Statum) =====
+// All bank data values are in $M
+// NOTE: A previous duplicate fmt() function here was incorrectly treating $M values
+// as $B, causing $1,193M to display as "$1.2T". Removed to restore the correct
+// fmt() defined above which formats in $M with commas.
 function fmtM(v) { return '$' + v.toFixed(1) + 'M'; }
 function fmtPct(v) { return (v * 100).toFixed(1) + '%'; }
 
