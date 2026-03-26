@@ -1047,56 +1047,6 @@ function buildSummary() {
 
   let h = '';
 
-  // Powell Framework
-  h += '<div class="powell-frame">';
-  h += '<div class="powell-quote">"Tell me what you know. Tell me what you don\'t know. Then tell me what you think. Always distinguish which from which."<cite>Colin Powell, It Worked for Me: In Life and Leadership</cite></div>';
-  h += '<div class="powell-grid">';
-
-  // WHAT WE KNOW
-  h += '<div class="powell-col know">';
-  h += '<h4><span class="pw-icon">1</span> What We Know</h4>';
-  h += '<ul>';
-  h += '<li>The Fed, OCC, and FDIC published the Basel III Endgame re-proposal on March 19, 2026 with explicit risk weight schedules</li>';
-  h += '<li>Residential mortgage risk weights drop to 20-75% based on LTV (from ~50-65% current)</li>';
-  h += '<li>AOCI pass-through applies to Category III/IV banks (23 institutions)</li>';
-  h += '<li>Operational risk charge (BIC x 7.4%) applies to GSIBs only</li>';
-  h += '<li>MSA gets a 250% risk weight</li>';
-  h += '<li>Every bank\'s actual loan portfolio, CET1 capital, and RWA from Q4 2025 Call Reports (4,236 banks)</li>';
-  h += '</ul></div>';
-
-  // WHAT WE DON'T KNOW
-  h += '<div class="powell-col dontknow">';
-  h += '<h4><span class="pw-icon">2</span> What We Don\'t Know</h4>';
-  h += '<ul>';
-  h += '<li>Final rule text after comment period (comment period closes mid-2026)</li>';
-  h += '<li>Which banks will elect ERBA opt-in vs. stay on the Standardized Approach</li>';
-  h += '<li>Exact CRE risk weights for each bank (depends on property-level LTV data we do not have)</li>';
-  h += '<li>How banks will restructure portfolios in response</li>';
-  h += '<li>Whether the effective date (July 2028) will hold or shift</li>';
-  h += '<li>Individual bank loan-level LTV distributions (we use blended estimates)</li>';
-  h += '</ul></div>';
-
-  // WHAT WE THINK
-  h += '<div class="powell-col think">';
-  h += '<h4><span class="pw-icon">3</span> What We Think</h4>';
-  h += '<ul>';
-  h += '<li>Net capital relief of ~$96B across the system, with 99.5% of banks benefiting</li>';
-  h += '<li>Most banks will elect ERBA where favorable, making our CRE (85%) and Consumer (75%) estimates reasonable</li>';
-  h += '<li>Community banks benefit disproportionately (+77 bps avg) due to loan-heavy balance sheets</li>';
-  h += '<li>Category III banks face net headwinds from AOCI pass-through overwhelming lending relief</li>';
-  h += '<li>The Fed\'s own estimates (4.8%/5.2%/7.8% CET1 decreases) are directionally consistent with our bank-level results</li>';
-  h += '<li>Under the Standardized Approach alone (no ERBA), net impact would be ~$68B instead of ~$96B</li>';
-  h += '</ul></div>';
-
-  h += '</div>';
-  h += '<div style="margin-top:16px;padding:14px 18px;background:#fffdf0;border:1px solid var(--amber);border-radius:8px;font-size:0.82rem;color:#555;line-height:1.55;">';
-  h += '<span style="font-weight:700;color:var(--dark);">Your bank knows more than we do.</span> ';
-  h += 'Our estimates use publicly available Call Report data. But your bank has better data: your actual LTV distributions, your ERBA election plans, your AFS portfolio, and your restructuring strategy. ';
-  h += '8 of our 12 unknowns are things you already know about your own institution. ';
-  h += 'Use the <a href="#" onclick="document.querySelector(\'[data-tab=yourbank]\').click();return false;">Your Bank calculator</a> to input your data, ';
-  h += 'or contact <a href="mailto:statum@amberoon.com">statum@amberoon.com</a> for a customized analysis. We welcome feedback on our assumptions and methodology.';
-  h += '</div></div>';
-
   // Waterfall chart
   h += `<div class="grid-2">
     <div class="chart-box"><h3>Capital Impact Waterfall ($B)</h3><canvas id="ch-waterfall"></canvas></div>
@@ -1158,6 +1108,49 @@ function buildSummary() {
       <div class="ic-desc">Only 20 of 4,236 banks experience a net negative capital impact. The remaining 4,216 benefit directly (99.5%).</div>
     </div>
   </div>`;
+
+  // Powell Framework (bottom of Executive Summary)
+  h += '<div class="powell-frame" style="margin-top:24px;">';
+  h += '<div class="powell-quote">"Tell me what you know. Tell me what you don\'t know. Then tell me what you think. Always distinguish which from which."<cite>Colin Powell, It Worked for Me: In Life and Leadership</cite></div>';
+  h += '<div class="powell-grid">';
+  h += '<div class="powell-col know">';
+  h += '<h4><span class="pw-icon">1</span> What We Know</h4>';
+  h += '<ul>';
+  h += '<li>The Fed, OCC, and FDIC published the Basel III Endgame re-proposal on March 19, 2026 with explicit risk weight schedules</li>';
+  h += '<li>Residential mortgage risk weights drop to 20-75% based on LTV (from ~50-65% current)</li>';
+  h += '<li>AOCI pass-through applies to Category III/IV banks (23 institutions)</li>';
+  h += '<li>Operational risk charge (BIC x 7.4%) applies to GSIBs only</li>';
+  h += '<li>MSA gets a 250% risk weight</li>';
+  h += '<li>Every bank\'s actual loan portfolio, CET1 capital, and RWA from Q4 2025 Call Reports (4,236 banks)</li>';
+  h += '</ul></div>';
+  h += '<div class="powell-col dontknow">';
+  h += '<h4><span class="pw-icon">2</span> What We Don\'t Know</h4>';
+  h += '<ul>';
+  h += '<li>Final rule text after comment period (comment period closes mid-2026)</li>';
+  h += '<li>Which banks will elect ERBA opt-in vs. stay on the Standardized Approach</li>';
+  h += '<li>Exact CRE risk weights for each bank (depends on property-level LTV data we do not have)</li>';
+  h += '<li>How banks will restructure portfolios in response</li>';
+  h += '<li>Whether the effective date (July 2028) will hold or shift</li>';
+  h += '<li>Individual bank loan-level LTV distributions (we use blended estimates)</li>';
+  h += '</ul></div>';
+  h += '<div class="powell-col think">';
+  h += '<h4><span class="pw-icon">3</span> What We Think</h4>';
+  h += '<ul>';
+  h += '<li>Net capital relief of ~$96B across the system, with 99.5% of banks benefiting</li>';
+  h += '<li>Most banks will elect ERBA where favorable, making our CRE (85%) and Consumer (75%) estimates reasonable</li>';
+  h += '<li>Community banks benefit disproportionately (+82 bps avg) due to loan-heavy balance sheets</li>';
+  h += '<li>Category III banks face net headwinds from AOCI pass-through overwhelming lending relief</li>';
+  h += '<li>The Fed\'s own estimates (4.8%/5.2%/7.8% CET1 decreases) are directionally consistent with our bank-level results</li>';
+  h += '<li>Under the Standardized Approach alone (no ERBA), net impact would be ~$68B instead of ~$96B</li>';
+  h += '</ul></div>';
+  h += '</div>';
+  h += '<div style="margin-top:16px;padding:14px 18px;background:#fffdf0;border:1px solid var(--amber);border-radius:8px;font-size:0.82rem;color:#555;line-height:1.55;">';
+  h += '<span style="font-weight:700;color:var(--dark);">Your bank knows more than we do.</span> ';
+  h += 'Our estimates use publicly available Call Report data. But your bank has better data: your actual LTV distributions, your ERBA election plans, your AFS portfolio, and your restructuring strategy. ';
+  h += '8 of our 12 unknowns are things you already know about your own institution. ';
+  h += 'Use the <a href="#" onclick="document.querySelector(\'[data-tab=yourbank]\').click();return false;">Your Bank calculator</a> to input your data, ';
+  h += 'or contact <a href="mailto:statum@amberoon.com">statum@amberoon.com</a> for a customized analysis. We welcome feedback on our assumptions and methodology.';
+  h += '</div></div>';
 
   el.innerHTML = h;
   makeSortable(document.getElementById('cat-table'));
