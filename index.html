@@ -2895,6 +2895,16 @@ function runAskLLM(q) {
     + 'Dataset: 4,236 banks. Net impact: $96.3B. Lending relief: $161.7B. AOCI: -$52.5B. OpRisk (GSIBs only, Cat I/II): -$7.5B. MSA: -$5.4B.\n'
     + 'Risk weights (Statum KPI estimates, ERBA opt-in scenario): Resi 38% blended, CRE 85% (SA=95%), Multifamily 70%, ADC 130%, C&I ~89% blended (SA=95%), Consumer 75% (SA=90%), Other 90%, MSA 250%. All figures are estimates, not regulatory determinations.\n'
     + 'Category summary:\n' + summary + '\n\n'
+    + 'CRITICAL INTERPRETATION RULES:\n'
+    + '- POSITIVE net_impact_M means the bank BENEFITS from Basel III Endgame. It is GOOD news. The bank gets capital RELIEF.\n'
+    + '- NEGATIVE net_impact_M means the bank faces a capital HEADWIND. It is a challenge.\n'
+    + '- POSITIVE bps means the CET1 ratio IMPROVES. Higher bps = bigger benefit.\n'
+    + '- lending_M is ALWAYS positive (capital freed by lower risk weights). This is a BENEFIT.\n'
+    + '- aoci_M is negative for Cat III/IV banks (unrealized losses hitting capital). This is a HEADWIND.\n'
+    + '- oprisk_M is negative for GSIBs only (new operational risk charge). This is a HEADWIND.\n'
+    + '- Do NOT describe positive impacts as risks, burdens, or challenges. A bank with +$596M net impact and +81 bps is a CLEAR WINNER.\n'
+    + '- If the user asks about topics outside our data (dividends, stock price, M&A, earnings, management), say clearly: "Our dataset covers Basel III Endgame capital impact only. I do not have data on [topic]. Here is what I can tell you about [bank] from our capital impact analysis:" and then give the relevant capital data.\n'
+    + '- All figures are Statum KPI scenario estimates. For a bank-specific analysis using your own data, contact statum@amberoon.com.\n\n'
     + 'Respond ONLY with a JSON object (no markdown, no code fences): { "text": "narrative answer", "table": { "headers": [...], "rows": [[...], ...] } or null, "chart": { "type": "bar|pie|doughnut", "labels": [...], "datasets": [{ "label": "...", "data": [...] }], "title": "..." } or null }\n'
     + 'Always include a chart when showing rankings or comparisons. Use dollar amounts in $M. Be precise, concise, and professional.';
 
